@@ -2,6 +2,8 @@
 #include "raylib.h"
 #include "rcamera.h"
 
+#include "engine/engine_core.h"
+
 #define MAX_COLUMNS 20
 
 #if defined(PLATFORM_WEB)
@@ -15,10 +17,13 @@
 //------------------------------------------------------------------------------------
 int main(void)
 {
+
+    engine_core engine = engine_core(true);
     // Initialization
     //--------------------------------------------------------------------------------------
     const int screenWidth = 800;
     const int screenHeight = 450;
+    const double deltaTime = 0;
 
     InitWindow(screenWidth, screenHeight, "Phantom Engine - Window");
 
@@ -28,21 +33,11 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        // Update
-        //----------------------------------------------------------------------------------
-        // TODO: Update your variables here
-        //----------------------------------------------------------------------------------
-
-        // Draw
-        //----------------------------------------------------------------------------------
+        engine.Loop();
         BeginDrawing();
-
-        ClearBackground(RAYWHITE);
-
-        DrawText("Congrats! You created your first window!", 190, 200, 20, LIGHTGRAY);
-
+        engine.Render();
+        //Middle Process
         EndDrawing();
-        //----------------------------------------------------------------------------------
     }
 
     // De-Initialization
