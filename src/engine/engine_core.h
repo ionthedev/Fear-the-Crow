@@ -6,11 +6,14 @@
 #define ENGINE_LOOP_H
 
 #include "raylib.h"
-#include "raymath.h"
-#include "rlgl.h"
-#include "../libraries/raygui.h"
 #include "../game.h"
+#include <iostream>
 #include <chrono>
+#pragma region imgui
+#include "imgui.h"
+#include "rlImGui.h"
+#include "imguiThemes.h"
+#pragma endregion
 
 class engine_core {
 
@@ -27,7 +30,6 @@ public:
     bool IsRunning() const;
 
 protected:
-
     double deltaTime;
     double tLastUpdate;
     double tAccumulator;
