@@ -28,7 +28,6 @@ project(Fear_The_Crow)
 
 
 
-
 #Add raylib, and here you would add other libraries if needed!
 add_subdirectory(thirdparty/raylib)
 add_subdirectory(thirdparty/imgui-docking)
