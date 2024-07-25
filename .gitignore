@@ -54,3 +54,4 @@ dkms.conf
 
 /.idea/
 /cmake-build-release/
+/thirdparty/imgui-docking/imgui/.github/
