@@ -8,6 +8,7 @@
 
 
 
+
 class Player : public virtual Husk {
 
 public:
@@ -26,9 +27,20 @@ public:
     static Camera camera;
 
 protected:
-    void HandleMovement(float forward, float right, float up) override;
+    void HandleMovement() override;
+    float deltaTime;
+    float MAX_SPEED = 1.0f;
+    float CURR_SPEED = 0.0f;
+    float MAX_ACCEL = 10.0f * MAX_SPEED;
+    float GROUND_FRICTION = 6.0f;
 
-    float walkSpeed = 6.0f;
+    Vector3 Friction(Vector3 _velocity, float _deltaTime);
+    Vector3 wishDir(Vector3 _inputDir);
+
+    Vector3 CalculateGroundVelocity(Vector3 _wishDir, Vector3 _velocity, float _deltaTime);
+
+    Vector3 inputDir();
+    Vector3 velocity;
 
 };
 

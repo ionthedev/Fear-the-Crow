@@ -25,7 +25,6 @@ public:
     void Render() const override;
     void HandleInput() const override;
 
-    mutable Camera camera;
 
 
 

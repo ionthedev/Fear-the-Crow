@@ -45,6 +45,6 @@ bool Husk::GetIsActive()
     return Artifact::GetIsActive();
 }
 
-void Husk::HandleMovement(float forward, float right, float up)
+void Husk::HandleMovement()
 {
 }

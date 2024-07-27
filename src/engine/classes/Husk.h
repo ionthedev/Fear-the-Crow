@@ -20,7 +20,7 @@ public:
     bool GetIsActive() override;
 
 protected:
-    virtual void HandleMovement(float forward, float right, float up);
+    virtual void HandleMovement();
 
 
 };

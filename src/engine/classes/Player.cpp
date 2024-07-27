@@ -16,12 +16,13 @@ void Player::Init()
 void Player::Start()
 {
     Husk::Start();
+    GetPlayerCamera();
 
 }
 
 void Player::Update(double _deltaTime)
 {
-    Husk::Update(_deltaTime);
+
 }
 
 void Player::FixedUpdate(double _deltaTime)
@@ -29,6 +30,8 @@ void Player::FixedUpdate(double _deltaTime)
 
     HandleInput();
     Husk::FixedUpdate(_deltaTime);
+    HandleMovement();
+
 }
 
 void Player::Render()
@@ -39,37 +42,6 @@ void Player::Render()
 void Player::HandleInput()
 {
     Husk::HandleInput();
-    float forward;
-    float right;
-    if(IsKeyDown(KEY_W))
-    {
-        forward = walkSpeed;
-    }
-    else if(IsKeyDown(KEY_S))
-    {
-        forward = -walkSpeed;
-    }
-    else
-    {
-        forward = 0;
-    }
-
-    if(IsKeyDown(KEY_D))
-    {
-        right = walkSpeed;
-    }
-    else if(IsKeyDown(KEY_A))
-    {
-        right = -walkSpeed;
-    }
-    else
-    {
-        right = 0;
-    }
-
-    std::cout << forward << std::endl;
-    std::cout << right << std::endl;
-    HandleMovement(forward, right, 0.0f);
 
 
 }
@@ -89,30 +61,56 @@ Camera& Player::GetPlayerCamera()
     return camera;
 }
 
-void Player::HandleMovement(float forward, float right, float up)
+void Player::HandleMovement()
 {
-    Husk::HandleMovement(forward, right, up);
+    //CameraMoveForward(&GetPlayerCamera(), wishDir(inputDir()).x * MAX_SPEED, true);
+    //CameraMoveRight(&GetPlayerCamera(), wishDir(inputDir()).z * MAX_SPEED, true);
+    Husk::HandleMovement();
+    Vector3 cameraRotation = {GetMouseDelta().x*0.04f, GetMouseDelta().y*0.04f, 0};
+    UpdateCameraPro(&GetPlayerCamera(), CalculateGroundVelocity(wishDir(inputDir()), velocity, deltaTime), cameraRotation, 1.0f);
+}
 
+Vector3 Player::Friction(Vector3 _velocity, float _deltaTime)
+{
 
-    Vector3* movementVector = new Vector3();
-    movementVector->x = forward;
-    movementVector->y = 0;
-    movementVector->z = right;
+    return Vector3Scale(_velocity, GROUND_FRICTION * _deltaTime);
+}
 
-    Vector3* cameraRotation = new Vector3();
-    cameraRotation->x = GetMouseDelta().x * 0.05f;
-    cameraRotation->y = GetMouseDelta().y * 0.05f;
-    cameraRotation->z = 0;
+Vector3 Player::wishDir(Vector3 _inputDir)
+{
+    Vector3 forward = Vector3Scale(GetCameraForward(&GetPlayerCamera()), _inputDir.x);
+    Vector3 right = Vector3Scale(GetCameraRight(&GetPlayerCamera()), _inputDir.z);
 
-    UpdateCameraPro(&GetPlayerCamera(), *movementVector, *cameraRotation, 1.0f);
+    return Vector3Normalize(Vector3Add(forward, right));
+
+}
+
+Vector3 Player::CalculateGroundVelocity(Vector3 _wishDir, Vector3 _velocity, float _deltaTime)
+{
+    _velocity = Friction(_velocity, deltaTime);
+    float ADD_SPEED = PhanthomEngine::m_Clip(MAX_SPEED - CURR_SPEED, 0, MAX_SPEED * _deltaTime);
+    Vector3 out = Vector3Multiply(_velocity, Vector3Scale(_wishDir, ADD_SPEED));
+    std::cout << "Vector3(" << out.x << ", " << out.y << ", " << out.z << ")" << std::endl;
+
+    return out;
+}
+
+Vector3 Player::inputDir()
+{
+    float forward = IsKeyDown(KEY_W) - IsKeyDown(KEY_S);
+    float right = IsKeyDown(KEY_A) - IsKeyDown(KEY_D);
+
+    return { right, 0.0, forward};
 }
 
 Camera Player::camera = Camera
 {
-    Vector3{ 0.f, 1.8f, 0.f },  // position
-    Vector3{ 0.0f, 0.0f, 20.0f }, // target
-    Vector3{ 0.0f, 1.0f, 0.0f }, // up
-    90.0f,
-    CAMERA_FIRST_PERSON
+    { 0.0f, 2.0f, 4.0f },
+    { 0.0f, 2.0f, 0.0f },
+    { 0.0f, 1.0f, 0.0f },
+    60.0f,
+    CAMERA_PERSPECTIVE
+
+
 };
 
