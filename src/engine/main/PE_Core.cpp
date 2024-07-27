@@ -8,8 +8,6 @@
 PE_Core::PE_Core(bool initialized)
 {
     engine_running = initialized;
-    currentDeltaFrameTime = std::chrono::steady_clock::now(); // Get the current time
-    currentFixedFrameTime = std::chrono::steady_clock::now(); // Get the current time
 
 }
 
@@ -58,12 +56,14 @@ void PE_Core::Loop()
 
 double PE_Core::GetDeltaTime() const
 {
-    auto tLastUpdate = currentDeltaFrameTime;
+    static auto tLastUpdate = std::chrono::steady_clock::now();;
 
     currentDeltaFrameTime = std::chrono::steady_clock::now();
 
-    const std::chrono::duration<float> frameTime = currentDeltaFrameTime - tLastUpdate;
-    return frameTime.count();
+    double delta = std::chrono::duration<double>(currentDeltaFrameTime - tLastUpdate).count();
+    tLastUpdate = currentDeltaFrameTime;
+
+    return delta;
 }
 
 double PE_Core::GetFixedDeltaTime() const

@@ -41,8 +41,13 @@ file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/
 
 add_executable("${CMAKE_PROJECT_NAME}"
         src/main.cpp
-        src/engine/main/PE_Core.h)
-
+        src/engine/main/PE_Core.h
+        src/engine/classes/Artifact.cpp
+        src/engine/classes/Artifact.h
+        src/engine/PhantomEngine.h
+        src/engine/classes/Husk.h
+        src/engine/classes/Player.cpp
+        src/engine/classes/Player.h)
 set_property(TARGET "${CMAKE_PROJECT_NAME}" PROPERTY CXX_STANDARD 17)
 
 
