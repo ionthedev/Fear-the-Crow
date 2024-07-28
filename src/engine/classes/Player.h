@@ -28,19 +28,24 @@ public:
 
 protected:
     void HandleMovement() override;
+    void CalculateMovement(double _deltaTime);
     float deltaTime;
-    float MAX_SPEED = 1.0f;
-    float CURR_SPEED = 0.0f;
+    float MAX_SPEED = 3.0f;
+    float CURR_SPEED = 5.0f;
     float MAX_ACCEL = 10.0f * MAX_SPEED;
     float GROUND_FRICTION = 6.0f;
 
     Vector3 Friction(Vector3 _velocity, float _deltaTime);
-    Vector3 wishDir(Vector3 _inputDir);
+    Vector3 wishDir();
 
     Vector3 CalculateGroundVelocity(Vector3 _wishDir, Vector3 _velocity, float _deltaTime);
+    void SetCameraRotation();
 
     Vector3 inputDir();
     Vector3 velocity;
+
+    Vector3 position = { 0, 1, 0};
+    Vector3 rotation;
 
 };
 
