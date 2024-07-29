@@ -32,6 +32,16 @@ void Player::Update(double _deltaTime)
     DeltaTime = _deltaTime;
 }
 
+bool Player::WishJump()
+{
+    if(player_data.bIsGrounded)
+    {
+        return IsKeyDown(KEY_SPACE);
+    }
+    return false;
+
+}
+
 void Player::FixedUpdate(double _deltaTime)
 {
 
@@ -45,6 +55,7 @@ void Player::FixedUpdate(double _deltaTime)
 
     player_data.position = Vector3Add(player_data.position, Vector3Scale(player_data.lastVelocity, (float)DeltaTime));
     Accelerate(PLAYER_SPEED, PLAYER_GROUND_ACCELERATION);
+    WishJump();
     UpdateCamera();
     MouseLook(_deltaTime);
     //CalculateInputs(_deltaTime);
@@ -170,6 +181,11 @@ Vector3 Player::WishDir()
     return _wishDir;
 }
 
+void Player::ProcessJump()
+{
+
+}
+
 void Player::Accelerate(float _wishSpeed, float _acceleration)
 {
     float accelerationSpeed;
@@ -186,5 +202,18 @@ void Player::Accelerate(float _wishSpeed, float _acceleration)
 
     player_data.velocity = Vector3Add(player_data.velocity, Vector3Scale(WishDir(), accelerationSpeed));
     player_data.velocity.y = 0;
+
+}
+
+Vector3 Player::CalculateFriction(const Vector3& _velocity, float _friction, bool _bDAllowNegatives, double _deltaTime)
+{
+    float velLength = Vector3Length(_velocity);
+    float drop = velLength * _friction * (float)_deltaTime;
+
+    if(!_bDAllowNegatives)
+    {
+        return velLength == 0.0f ? Vector3{0,0,0} : Vector3Scale(Vector3Normalize(_velocity), std::max(0.0f, velLength - drop));
+    }
+    return velLength == 0.0f ? Vector3{0,0,0} : Vector3Scale(Vector3Normalize(_velocity), velLength - drop);
 
 }

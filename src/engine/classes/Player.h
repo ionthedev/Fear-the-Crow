@@ -50,6 +50,7 @@ public:
     void Init() override;
     void Start() override;
     void Update(double _deltaTime) override;
+    bool WishJump();
     void FixedUpdate(double _deltaTime) override;
     void Render() override;
     auto HandleInput() -> void override;
@@ -65,7 +66,10 @@ protected:
     void UpdateCamera();
     Vector2 MoveDir();
     Vector3 WishDir();
+    void ProcessJump();
     void Accelerate(float _wishSpeed, float _acceleration);
+    Vector3 CalculateFriction(const Vector3& _velocity, float _friction, bool _bDisAllowNegatives, double _deltaTime);
+    void ApplyFrictionToVelocity(Vector3 _moveDir, double _deltaTime);
     double DeltaTime;
 };
 
