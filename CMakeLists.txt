@@ -47,7 +47,8 @@ add_executable("${CMAKE_PROJECT_NAME}"
         src/engine/PhantomEngine.h
         src/engine/classes/Husk.h
         src/engine/classes/Player.cpp
-        src/engine/classes/Player.h)
+        src/engine/classes/Player.h
+        thirdparty/linalg/linalg.h)
 set_property(TARGET "${CMAKE_PROJECT_NAME}" PROPERTY CXX_STANDARD 17)
 
 

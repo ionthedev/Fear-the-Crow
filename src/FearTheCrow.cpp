@@ -11,8 +11,9 @@ FearTheCrow::FearTheCrow(bool _initialized)
     //Initializes the engine and triggers the loop
     engine = PE_Core(true);
 
-    player = Player();
     engine.SetGame(this);
+
+    player = Player();
     engine.Loop();
 }
 
@@ -58,7 +59,7 @@ void FearTheCrow::FixedUpdate(double _deltaTime) const
 void FearTheCrow::Render() const
 {
     ClearBackground(RAYWHITE);
-      BeginMode3D(player.GetPlayerCamera());
+      BeginMode3D(player.camera);
 
                 DrawPlane((Vector3){ 0.0f, 0.0f, 0.0f }, (Vector2){ 32.0f, 32.0f }, LIGHTGRAY); // Draw ground
                 DrawCube((Vector3){ -16.0f, 2.5f, 0.0f }, 1.0f, 5.0f, 32.0f, BLUE);     // Draw a blue wall
@@ -75,8 +76,8 @@ void FearTheCrow::Render() const
                 // Draw player cube
                 if (cameraMode == CAMERA_THIRD_PERSON)
                 {
-                    DrawCube(player.GetPlayerCamera().target, 0.5f, 0.5f, 0.5f, PURPLE);
-                    DrawCubeWires(player.GetPlayerCamera().target, 0.5f, 0.5f, 0.5f, DARKPURPLE);
+                    DrawCube(player.camera.target, 0.5f, 0.5f, 0.5f, PURPLE);
+                    DrawCubeWires(player.camera.target, 0.5f, 0.5f, 0.5f, DARKPURPLE);
                 }
 
             EndMode3D();
