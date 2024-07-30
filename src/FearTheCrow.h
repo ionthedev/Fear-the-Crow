@@ -50,6 +50,7 @@ protected:
     mutable Material material;
     mutable Vector3 normal = {0}; //Init the normal value
     mutable worldObject level;
+    mutable Model skybox;
 
     private:
     bool initialized;

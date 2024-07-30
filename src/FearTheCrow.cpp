@@ -4,6 +4,8 @@
 
 #include "FearTheCrow.h"
 
+#include "rlgl.h"
+
 #define GLSL_VERSION  330
 
 FearTheCrow::FearTheCrow(bool _initialized)
@@ -29,9 +31,25 @@ void FearTheCrow::Start() const
 {
     DrawWindow();
 
+    Mesh cube = GenMeshCube(1.0f, 1.0f, 1.0f);
+    skybox = LoadModelFromMesh(cube);
+    skybox.materials[0].shader = LoadShader(TextFormat("../resources/Shaders/skybox.vs", GLSL_VERSION),
+                                            TextFormat("../resources/Shaders/skybox.fs", GLSL_VERSION));
+    SetShaderValue(skybox.materials[0].shader, GetShaderLocation(skybox.materials[0].shader, "environmentMap"), (int[1]){ MATERIAL_MAP_CUBEMAP }, SHADER_UNIFORM_INT);
+    SetShaderValue(skybox.materials[0].shader, GetShaderLocation(skybox.materials[0].shader, "doGamma"), (int[1]) { false ? 1 : 0 }, SHADER_UNIFORM_INT);
+    SetShaderValue(skybox.materials[0].shader, GetShaderLocation(skybox.materials[0].shader, "vflipped"), (int[1]){ false ? 1 : 0 }, SHADER_UNIFORM_INT);
+
+    Shader shdrCubemap = LoadShader(TextFormat("../resources/Shaders/cubemap.vs", GLSL_VERSION),
+                                    TextFormat("../resources/Shaders/cubemap.fs", GLSL_VERSION));
+
+    SetShaderValue(shdrCubemap, GetShaderLocation(shdrCubemap, "equirectangularMap"), (int[1]){ 0 }, SHADER_UNIFORM_INT);
+    char skyboxFileName[256] = { 0 };
+    Image img = LoadImage("../resources/Textures/skybox.png");
+    skybox.materials[0].maps[MATERIAL_MAP_CUBEMAP].texture = LoadTextureCubemap(img, CUBEMAP_LAYOUT_AUTO_DETECT);    // CUBEMAP_LAYOUT_PANORAMA
+    UnloadImage(img);
 
     shader = LoadShader(TextFormat("../resources/Shaders/shader.vs", GLSL_VERSION),
-                               TextFormat("/resources/Shaders/shader.fs", GLSL_VERSION));
+                               TextFormat("../resources/Shaders/shader.fs", GLSL_VERSION));
 
     shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
 
@@ -45,7 +63,7 @@ void FearTheCrow::Start() const
 
     level.model = new Model(LoadModel("../resources/Mesh/test_level.gltf"));
     level.model->materials[0].shader = shader;
-    level.model->materials[0].maps[MATERIAL_MAP_DIFFUSE].color = WHITE;
+    level.model->materials[0].maps[MATERIAL_MAP_DIFFUSE].color = BLUE;
 
     level.position = new Vector3{0,0,0};
 
@@ -144,20 +162,17 @@ void FearTheCrow::FixedUpdate(double _deltaTime) const
 
 void FearTheCrow::Render() const
 {
+
     ClearBackground(RAYWHITE);
       BeginMode3D(player.camera);
+                rlDisableBackfaceCulling();
+                rlDisableDepthMask();
+                DrawModel(skybox, (Vector3){0, 0, 0}, 0.0f, WHITE);
+                rlEnableBackfaceCulling();
+                rlEnableDepthMask();
+                DrawModel(*ramp.model, *ramp.position, 1.0f, WHITE);
                 DrawModel(*level.model, {0,0,0}, 1.0f, WHITE);
 
-                DrawModel(*ramp.model, *ramp.position, 1.0f, WHITE);
-                DrawCube((Vector3){ -16.0f, 2.5f, 0.0f }, 1.0f, 5.0f, 32.0f, BLUE);     // Draw a blue wall
-                DrawCube((Vector3){ 16.0f, 2.5f, 0.0f }, 1.0f, 5.0f, 32.0f, LIME);      // Draw a green wall
-                DrawCube((Vector3){ 0.0f, 2.5f, 16.0f }, 32.0f, 5.0f, 1.0f, GOLD);      // Draw a yellow wall
-
-                // Draw some cubes around
-                for (int i = 0; i < MAX_COLUMNS; i++)
-                {
-                    DrawCubeWires(positions[i], 2.0f, heights[i], 2.0f, MAROON);
-                }
 
                 // Draw player cube
                 if (cameraMode == CAMERA_THIRD_PERSON)
