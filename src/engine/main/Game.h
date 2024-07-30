@@ -26,8 +26,8 @@ public:
     virtual void Render() const;
     virtual void HandleInput() const;
 
-    const int screenWidth = 800;
-    const int screenHeight = 450;
+    const int screenWidth = 1600;
+    const int screenHeight = 900;
 
 
 

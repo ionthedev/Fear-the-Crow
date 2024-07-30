@@ -6,7 +6,7 @@
 #define HUSK_H
 #include "../PhantomEngine.h"
 
-class Husk : public Artifact {
+class Husk : public GameObject {
 
 public:
 

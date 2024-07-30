@@ -2,17 +2,17 @@
 // Created by Brandon Friend on 7/25/24.
 //
 
-#ifndef ARTIFACT_H
-#define ARTIFACT_H
+#ifndef GAMEOBJECT_H
+#define GAMEOBJECT_H
 #include "../main/PE_Core.h"
 #include "../main/Game.h"
 
 
-class Artifact {
+class GameObject {
 
 public:
-    Artifact();
-    virtual ~Artifact();
+    GameObject();
+    virtual ~GameObject();
 
     virtual void Init();
     virtual void Start();
@@ -31,4 +31,4 @@ private:
 
 
 
-#endif //ARTIFACT_H
+#endif //GAMEOBJECT_H

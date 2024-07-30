@@ -10,7 +10,6 @@
 void Player::Init()
 {
     Husk::Init();    camera = *new Camera();
-    player_data.position = (Vector3){0, 0, 0}; // Placeholder for level start position
     player_data.lookRotationEuler.x = 0.0f;
     player_data.lookRotationEuler.z = 0.0f;
     player_data.lookRotationEuler.y = PI * 2 - (atan2(-1.0f, -1.0f) * 1.0f); // Placeholder for start direction
@@ -32,14 +31,9 @@ void Player::Update(double _deltaTime)
     DeltaTime = _deltaTime;
 }
 
-bool Player::WishJump()
+bool Player::WishJump() const
 {
-    if(player_data.bIsGrounded)
-    {
         return IsKeyDown(KEY_SPACE);
-    }
-    return false;
-
 }
 
 void Player::FixedUpdate(double _deltaTime)
@@ -48,18 +42,23 @@ void Player::FixedUpdate(double _deltaTime)
 
     Husk::FixedUpdate(_deltaTime);
 
-    player_data.lookRotationMat3 = PhantomEngine::MatrixFromYawPitchRoll( player_data.lookRotationEuler.y + player_data.rotationalVelocity.y, Clamp( player_data.lookRotationEuler.x + player_data.rotationalVelocity.x, -PI * 0.5 * 0.95, PI * 0.5 * 0.95), player_data.lookRotationEuler.z + player_data.rotationalVelocity.z);
 
-    player_data.lastPosition = player_data.position;
-    player_data.lastVelocity = player_data.velocity;
 
-    player_data.position = Vector3Add(player_data.position, Vector3Scale(player_data.lastVelocity, (float)DeltaTime));
     Accelerate(PLAYER_SPEED, PLAYER_GROUND_ACCELERATION);
-    WishJump();
+    ProcessJump();
+    ApplyGravity();
+
     UpdateCamera();
     MouseLook(_deltaTime);
     //CalculateInputs(_deltaTime);
     //player_data.velocity = player_data.velocity;
+    player_data.lookRotationMat3 = PhantomEngine::MatrixFromYawPitchRoll( player_data.lookRotationEuler.y + player_data.rotationalVelocity.y, Clamp( player_data.lookRotationEuler.x + player_data.rotationalVelocity.x, -PI * 0.5 * 0.95, PI * 0.5 * 0.95), player_data.lookRotationEuler.z + player_data.rotationalVelocity.z);
+
+    player_data.lastPosition = player_data.position;
+    player_data.velocity = CalculateFriction(player_data.velocity, PLAYER_GROUND_FRICTION, true, _deltaTime);
+
+    player_data.lastVelocity = player_data.velocity;
+    player_data.position = Vector3Add(player_data.position, Vector3Scale(player_data.lastVelocity, (float)DeltaTime));
 }
 
 void Player::Render()
@@ -82,20 +81,31 @@ bool Player::GetIsActive()
     return Husk::GetIsActive();
 }
 
-void Player::MouseLook(double _deltaTime) {
+Vector3 Player::GetWishDir()
+{
+    return WishDir();
+}
+
+Vector2 Player::GetMoveDir()
+{
+    return MoveDir();
+}
+
+void Player::MouseLook(const double _deltaTime) {
+    const auto fDeltaTime = static_cast<float>(_deltaTime);
     // Update rotational velocity with mouse input
     player_data.rotationalVelocity.y += -GetMouseDelta().x * settings_sensitivity * PLAYER_LOOK_SENSITIVITY;
     player_data.rotationalVelocity.x += GetMouseDelta().y * settings_sensitivity * PLAYER_LOOK_SENSITIVITY;
 
     // Clamp the pitch (x-axis rotation)
-    player_data.lookRotationEuler.x = Clamp(player_data.lookRotationEuler.x + player_data.rotationalVelocity.x * _deltaTime, -PI * 0.5 * 0.95, PI * 0.5 * 0.95);
+    player_data.lookRotationEuler.x = Clamp(player_data.lookRotationEuler.x + player_data.rotationalVelocity.x * static_cast<float>(_deltaTime), -PI * 0.5 * 0.95, PI * 0.5 * 0.95);
 
     // Update the look rotation euler angles
-    player_data.lookRotationEuler.y += player_data.rotationalVelocity.y * _deltaTime;
+    player_data.lookRotationEuler.y += player_data.rotationalVelocity.y * fDeltaTime;
 
     // Reset the roll (z-axis rotation)
-    player_data.lookRotationEuler.z = Lerp(player_data.lookRotationEuler.z, 0.0, Clamp((float)_deltaTime * 7.5, 0.0, 1.0));
-    player_data.lookRotationEuler.z -= MoveDir().x * (float)_deltaTime * 0.75f;
+    player_data.lookRotationEuler.z = Lerp(player_data.lookRotationEuler.z, 0.0, Clamp(fDeltaTime * 7.5f, 0.0, 1.0));
+    player_data.lookRotationEuler.z -= MoveDir().x * fDeltaTime * 0.75f;
     player_data.lookRotationEuler.z = Clamp(player_data.lookRotationEuler.z, -PI * 0.3f, PI * 0.5f);
 
     // Create rotation matrix from euler angles
@@ -110,18 +120,18 @@ void Player::MouseLook(double _deltaTime) {
     camera.target = Vector3Add(camera.position, camForward);
 
     // Calculate camera up vector
-    camera.up = Vector3Normalize(PhantomEngine::QuaternionMultiplyVector3(PhantomEngine::QuaternionAngleAxis(player_data.lookRotationEuler.z * 1.3, camForward), Vector3{0, 1.0, 0}));
+    camera.up = Vector3Normalize(PhantomEngine::QuaternionMultiplyVector3(PhantomEngine::QuaternionAngleAxis(player_data.lookRotationEuler.z * 1.3f, camForward), Vector3{0, 1.0, 0}));
 
     // Reset rotational velocity
     player_data.rotationalVelocity = {0, 0, 0};
 
-    std::cout << "Camera Position: Vector3(" << camera.position.x << ", " << camera.position.y << ", " << camera.position.z << ")" << std::endl;
     //std::cout << "Camera Up: Vector3(" << camera.up.x << ", " << camera.up.y << ", " << camera.up.z << ")" << std::endl;
 }
 
 
 
 void Player::CalculateInputs(double _deltaTime) {
+    const auto fDeltaTime = static_cast<float>(_deltaTime);
     Vector3 acceleration = { 0 };
     if (IsKeyDown(KEY_W)) acceleration = Vector3Add(acceleration, player_data.lookDir);
     if (IsKeyDown(KEY_S)) acceleration = Vector3Subtract(acceleration, player_data.lookDir);
@@ -132,16 +142,16 @@ void Player::CalculateInputs(double _deltaTime) {
 
     if (Vector3Length(acceleration) > 0) {
         acceleration = Vector3Normalize(acceleration);
-        if (player_data.bIsGrounded) {
-            player_data.velocity = Vector3Add(player_data.velocity, Vector3Scale(acceleration, PLAYER_SPEED * PLAYER_GROUND_ACCELERATION * (float)_deltaTime));
-            player_data.velocity = Vector3Scale(player_data.velocity, pow(PLAYER_GROUND_FRICTION, (float)_deltaTime));
-        } else {
-            player_data.velocity = Vector3Add(player_data.velocity, Vector3Scale(acceleration, PLAYER_SPEED * (float)_deltaTime));
-            player_data.velocity = Vector3Scale(player_data.velocity, pow(PLAYER_AIR_FRICTION, (float)_deltaTime));
-        }
+        // if (IsGrounded()) {
+        //     player_data.velocity = Vector3Add(player_data.velocity, Vector3Scale(acceleration, PLAYER_SPEED * PLAYER_GROUND_ACCELERATION * fDeltaTime));
+        //     player_data.velocity = Vector3Scale(player_data.velocity, pow(PLAYER_GROUND_FRICTION, fDeltaTime));
+        // } else {
+        //     player_data.velocity = Vector3Add(player_data.velocity, Vector3Scale(acceleration, PLAYER_SPEED * fDeltaTime));
+        //     player_data.velocity = Vector3Scale(player_data.velocity, pow(PLAYER_AIR_FRICTION, fDeltaTime));
+        // }
     }
 
-    player_data.position = Vector3Add(player_data.position, Vector3Scale(player_data.velocity, (float)_deltaTime));
+    player_data.position = Vector3Add(player_data.position, Vector3Scale(player_data.velocity, fDeltaTime));
 
 
 
@@ -168,7 +178,7 @@ Vector2 Player::MoveDir()
     return _moveDir;
 }
 
-Vector3 Player::WishDir()
+Vector3 Player::WishDir() const
 {
 
     Vector3 forward = Vector3Normalize(PhantomEngine::MatrixMultiplyVector3(player_data.lookRotationMat3, Vector3Multiply({0, 0, 1}, {1, 0, 1})));
@@ -183,37 +193,48 @@ Vector3 Player::WishDir()
 
 void Player::ProcessJump()
 {
+    if(WishJump()) player_data.velocity.y = PLAYER_JUMP_SPEED;
 
+}
+
+void Player::ApplyGravity()
+{
+        player_data.velocity.y -= PLAYER_GRAVITY;
 }
 
 void Player::Accelerate(float _wishSpeed, float _acceleration)
 {
+
+    const auto fDeltaTime = static_cast<float>(DeltaTime);
     float accelerationSpeed;
     float currentSpeed;
     float addSpeed;
 
     currentSpeed = Vector3DotProduct(player_data.velocity, WishDir());
     addSpeed = _wishSpeed - currentSpeed;
-   // if(addSpeed < 0) return;
+    if(addSpeed < 0) return;
 
-    accelerationSpeed = _acceleration * _wishSpeed * (float)DeltaTime;
+    accelerationSpeed = _acceleration * _wishSpeed * fDeltaTime;
 
     if(accelerationSpeed > addSpeed) accelerationSpeed = addSpeed;
 
     player_data.velocity = Vector3Add(player_data.velocity, Vector3Scale(WishDir(), accelerationSpeed));
-    player_data.velocity.y = 0;
+
 
 }
 
-Vector3 Player::CalculateFriction(const Vector3& _velocity, float _friction, bool _bDAllowNegatives, double _deltaTime)
+Vector3 Player::CalculateFriction(const Vector3 &_velocity, float _friction, bool _bDAllowNegatives, double _deltaTime)
 {
-    float velLength = Vector3Length(_velocity);
-    float drop = velLength * _friction * (float)_deltaTime;
 
-    if(!_bDAllowNegatives)
+    const auto fDeltaTime = static_cast<float>(_deltaTime);
+    const float velLength = Vector3Length(_velocity);
+    const float drop = velLength * _friction * fDeltaTime;
+
+    if (!_bDAllowNegatives)
     {
-        return velLength == 0.0f ? Vector3{0,0,0} : Vector3Scale(Vector3Normalize(_velocity), std::max(0.0f, velLength - drop));
+        return velLength == 0.0f ? Vector3{0, 0, 0}
+                                 : Vector3Scale(Vector3Normalize(_velocity), std::max(0.0f, velLength - drop));
     }
-    return velLength == 0.0f ? Vector3{0,0,0} : Vector3Scale(Vector3Normalize(_velocity), velLength - drop);
-
+    return velLength == 0.0f ? Vector3{0, 0, 0} : Vector3Scale(Vector3Normalize(_velocity), velLength - drop);
 }
+

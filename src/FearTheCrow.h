@@ -8,12 +8,21 @@
 #include "engine/classes/Player.h"
 #include "engine/main/PE_Core.h"
 #include "engine/main/Game.h"
+#include "engine/classes/Collision.h"
 
 
 #define MAX_COLUMNS 20
 class FearTheCrow : public Game {
 
 public:
+
+    typedef struct
+    {
+        Model *model = nullptr;
+        Vector3 *position = nullptr;
+        Collider *collider[100];
+    } worldObject;
+
     FearTheCrow() = default;
     FearTheCrow(bool _initialized);
     ~FearTheCrow();
@@ -34,7 +43,13 @@ protected:
     mutable float heights[MAX_COLUMNS] = { 0 };
     mutable Vector3 positions[MAX_COLUMNS] = { 0 };
     mutable Color colors[MAX_COLUMNS] = { 0 };
+    mutable Mesh meshes[MAX_COLUMNS] = { 0 };
     mutable Player player;
+    mutable worldObject ramp;
+    mutable Shader shader;
+    mutable Material material;
+    mutable Vector3 normal = {0}; //Init the normal value
+    mutable worldObject level;
 
     private:
     bool initialized;

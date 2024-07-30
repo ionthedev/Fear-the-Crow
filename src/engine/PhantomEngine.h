@@ -5,16 +5,18 @@
 #ifndef PHANTOMENGINE_H
 #define PHANTOMENGINE_H
 
+#include <cstring>
+#include <string>
+#include "../../thirdparty/linalg/linalg.h"
+#include "classes/GameObject.h"
+#include "classes/Husk.h"
+#include "imgui.h"
+#include "main/Game.h"
+#include "main/PE_Core.h"
 #include "raylib.h"
 #include "raymath.h"
 #include "rcamera.h"
 #include "rlImGui.h"
-#include "imgui.h"
-#include "main/PE_Core.h"
-#include "main/Game.h"
-#include "classes/Artifact.h"
-#include "classes/Husk.h"
-#include "../../thirdparty/linalg/linalg.h"
 
 class PhantomEngine
 {
@@ -113,6 +115,32 @@ class PhantomEngine
         q.z = v.z;
         q.w = std::cos(t);
         return q;
+    }
+
+    static char* Vector3ToChar(Vector3 vec) {
+        // Create a string representation of the Vector3
+        std::string vecString = "{" + std::to_string(vec.x) + ", " + std::to_string(vec.y) + ", " + std::to_string(vec.z) + "}";
+
+        // Allocate memory for the char array
+        char* charArray = new char[vecString.length() + 1];
+
+        // Copy the string to the char array
+        std::strcpy(charArray, vecString.c_str());
+
+        return charArray;
+    }
+
+    static char* Vector2ToChar(Vector2 vec) {
+        // Create a string representation of the Vector3
+        std::string vecString = "{" + std::to_string(vec.x) + ", " + std::to_string(vec.y) + "}";
+
+        // Allocate memory for the char array
+        char* charArray = new char[vecString.length() + 1];
+
+        // Copy the string to the char array
+        std::strcpy(charArray, vecString.c_str());
+
+        return charArray;
     }
 
 };
