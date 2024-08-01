@@ -5,7 +5,6 @@
 #include "Player.h"
 
 
-
 void Player::Init()
 {
     Husk::Init();    camera = *new Camera();
@@ -79,8 +78,8 @@ bool Player::GetIsActive() { return Husk::GetIsActive(); }
 
 void Player::PrepareCollision()
 {
-    //collider = *new btCollisionObject();
-   // collider.setCollisionShape(new btBoxShape(btVector3(1.0f, 2.0f, 2.0f)));
+    collider = *new btCollisionObject();
+    collider.setCollisionShape(new btBoxShape(btVector3(1.0f, 2.0f, 2.0f)));
 }
 
 Vector3 Player::GetWishDir()

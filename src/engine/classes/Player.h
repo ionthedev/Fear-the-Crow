@@ -5,7 +5,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "../PhantomEngine.h"
-#include "../bullet3/src/BulletCollision/CollisionShapes/btCollisionShape.h"
+#include "bullet/btBulletCollisionCommon.h"
 
 
 #define PLAYER_MAX_HEALTH 10
@@ -62,7 +62,7 @@ public:
     Vector3 GetWishDir();
     static Vector2 GetMoveDir();
     float settings_sensitivity = 100.0f;
-   // btCollisionObject collider;
+    btCollisionObject collider;
 
     Camera camera;
 
