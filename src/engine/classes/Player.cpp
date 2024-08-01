@@ -4,7 +4,6 @@
 
 #include "Player.h"
 
-#include "../../thirdparty/linalg/linalg.h"
 
 
 void Player::Init()

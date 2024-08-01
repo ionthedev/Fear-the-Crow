@@ -7,7 +7,6 @@
 
 #include <cstring>
 #include <string>
-#include "../../thirdparty/linalg/linalg.h"
 #include "classes/GameObject.h"
 #include "classes/Husk.h"
 #include "imgui.h"

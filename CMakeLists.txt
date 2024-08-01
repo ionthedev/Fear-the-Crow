@@ -24,19 +24,25 @@ set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build Raylib as static libraries" FORCE)
 
 
 
-project(Fear_The_Crow)
+project(Fear-the-Crow)
 
 
 
 #Add raylib, and here you would add other libraries if needed!
-add_subdirectory(thirdparty/raylib)
-add_subdirectory(thirdparty/imgui-docking)
-add_subdirectory(thirdparty/rlImGui)
 
+add_subdirectory(src/thirdparty/raylib)
+add_subdirectory(src/thirdparty/imgui-docking)
+add_subdirectory(src/thirdparty/rlImGui)
+add_subdirectory(src/thirdparty/glm)
+add_subdirectory(src/thirdparty/bullet3)
 
 # MY_SOURCES is defined to be a list of all the source files for my game
 # DON'T ADD THE SOURCES BY HAND, they are already added with this macro
-file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}"
+	/src/*.cpp
+	/src/engine/*.cpp
+	/src/include/*.cpp
+)
 
 
 add_executable("${CMAKE_PROJECT_NAME}"
@@ -48,9 +54,13 @@ add_executable("${CMAKE_PROJECT_NAME}"
         src/engine/classes/Husk.h
         src/engine/classes/Player.cpp
         src/engine/classes/Player.h
-        thirdparty/linalg/linalg.h
         src/engine/classes/Collision.h
+        src/game/FearTheCrow.cpp
+        src/engine/main/Game.cpp
+        src/engine/main/PE_Core.cpp
+        src/engine/classes/Husk.cpp
 )
+
 set_property(TARGET "${CMAKE_PROJECT_NAME}" PROPERTY CXX_STANDARD 17)
 
 
@@ -90,5 +100,5 @@ target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURC
 
 # Link raylib library statically, Here wou would add other libraries!
 target_link_libraries("${CMAKE_PROJECT_NAME}" PRIVATE
-        raylib_static imgui rlimgui
-)
+        raylib_static imgui rlimgui glm ${BULLET_LIBRARIES})
+

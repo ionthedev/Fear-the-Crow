@@ -69,12 +69,12 @@ protected:
     void MouseLook(double _deltaTime);
     void CalculateInputs(double _deltaTime);
     void UpdateCamera();
-    static static Vector2 MoveDir();
+    static Vector2 MoveDir();
     Vector3 WishDir() const;
     void ProcessJump();
     void ApplyGravity();
     void Accelerate(float _wishSpeed, float _acceleration);
-    static static static Vector3 CalculateFriction(const Vector3& _velocity, float _friction, bool _bDisAllowNegatives, double _deltaTime);
+    static Vector3 CalculateFriction(const Vector3& _velocity, float _friction, bool _bDisAllowNegatives, double _deltaTime);
     void ApplyFrictionToVelocity(Vector3 _moveDir, double _deltaTime);
     double DeltaTime;
 };
