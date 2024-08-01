@@ -4,27 +4,19 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Status-in%20development-red.svg">
-  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/ionthedev/phantom-engine">
-  <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/ionthedev/phantom-engine">
-  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/ionthedev/phantom-engine">
-  <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/ionthedev/phantom-engine/build_linux.yml">
+  <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/ionthedev/Fear-the-Crow">
+  <img alt="GitHub code size in bytes" src="https://img.shields.io/github/languages/code-size/ionthedev/Fear-the-Crow">
+  <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/ionthedev/Fear-the-Crow">
+  <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/ionthedev/Fear-the-Crow/build_linux.yml">
 
 </p>
 
 
 ## Introduction
-The Phantom Engine is a game engine aimed at making retro aesthetic games. Currently it's being developed along side [Fear The Crow](https://github.com/ionthedev/Fear-the-Crow), a quake styled shooter game.
-Currently it does not have a GUI and won't have one for a long time. So in it's current state, it is a code only project.
+Fear The Crow is an in progress FPS Shooter game fully written in C++ using the Raylib Library.
 
-## Libraries
-Currently we are only using the following
-- [Raylib](https://github.com/raysan5/raylib?tab=Zlib-1-ov-file#readme)
-- [Imgui-Docking](https://github.com/ZephyrWolf/imgui-docking)
-- [rlImGui](https://github.com/raylib-extras/rlImGui)
+The engine being developed around this project is called the Phantom Engine. A C++ based engine catered towards making retro aesthetic games.
+To learn about the architecture of the engine, visit 
+https://ionthedev.com/phantom_engine
 
-## How to Install
-The setup for the engine is the same as Raylib's setup.
-
-- Windows: https://github.com/raysan5/raylib/wiki/Working-on-Windows
-- Linux: https://github.com/raysan5/raylib/wiki/Working-on-GNU-Linux
-- MacOS: https://github.com/raysan5/raylib/wiki/Working-on-macOS
+To follow the development of the project, feel free to view the trello page. https://trello.com/b/Xgkxy3Ux/fear-the-crow
