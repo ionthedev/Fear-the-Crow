@@ -45,15 +45,23 @@ jobs:
           libxkbcommon-dev libdrm-dev libgbm-dev libgl1-mesa-dev libgles2-mesa-dev \
           libegl1-mesa-dev libdbus-1-dev libibus-1.0-dev libudev-dev fcitx-libs-dev \
           libglm-dev wayland-protocols wayland-dev wayland-scanner++ \
-          wayland-client wayland-server wayland-cursor wayland-egl
+          wayland-client wayland-server wayland-cursor wayland-egl \
+          wayland-devel
+
+    - name: Verify Wayland tools
+      run: |
+        wayland-scanner --version
+        pkg-config --modversion wayland-client wayland-server wayland-cursor wayland-egl
+
+    - name: Clear CMake cache
+      run: rm -rf ${{github.workspace}}/build/CMakeCache.txt
+
+    - name: Configure CMake
+      run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
     - name: Build
-      # Build your program with the given configuration
       run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
     - name: Test
       working-directory: ${{github.workspace}}/build
-      # Execute tests defined by the CMake configuration.
-      # See https://cmake.org/cmake/help/latest/manual/ctest.1.html for more detail
       run: ctest -C ${{env.BUILD_TYPE}}
-
