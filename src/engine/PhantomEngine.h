@@ -7,11 +7,11 @@
 
 #include <cstring>
 #include <string>
+#include "Core/Game.h"
+#include "Core/PE_Core.h"
 #include "classes/GameObject.h"
 #include "classes/Husk.h"
 #include "imgui.h"
-#include "main/Game.h"
-#include "main/PE_Core.h"
 #include "raylib.h"
 #include "raymath.h"
 #include "rcamera.h"

@@ -42,28 +42,29 @@ file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}"
 	/src/*.cpp
 	/src/engine/*.cpp
 	/src/include/*.cpp
+    /src/thirdparty/*.cpp
+    /src/thirdparty/*.h
 )
 
 
 add_executable("${CMAKE_PROJECT_NAME}"
         src/main.cpp
-        src/engine/main/PE_Core.h
+        src/engine/Core/PE_Core.h
         src/engine/classes/GameObject.cpp
         src/engine/classes/GameObject.h
         src/engine/PhantomEngine.h
         src/engine/classes/Husk.h
         src/engine/classes/Player.cpp
         src/engine/classes/Player.h
-        src/engine/classes/Collision.h
         src/game/FearTheCrow.cpp
-        src/engine/main/Game.cpp
-        src/engine/main/PE_Core.cpp
+        src/engine/Core/Game.cpp
+        src/engine/Core/PE_Core.cpp
         src/engine/classes/Husk.cpp
 )
 
 set_property(TARGET "${CMAKE_PROJECT_NAME}" PROPERTY CXX_STANDARD 17)
 
-
+include_directories(/src/thirdparty/bullet3/src)
 
 if(PRODUCTION_BUILD)
     # setup the ASSETS_PATH macro to be in the root folder of your exe
@@ -100,5 +101,9 @@ target_include_directories("${CMAKE_PROJECT_NAME}" PUBLIC "${CMAKE_CURRENT_SOURC
 
 # Link raylib library statically, Here wou would add other libraries!
 target_link_libraries("${CMAKE_PROJECT_NAME}" PRIVATE
-        raylib_static imgui rlimgui glm ${BULLET_LIBRARIES})
+        raylib_static
+        imgui
+        rlimgui
+        glm
+        ${BULLET_LIBRARIES})
 

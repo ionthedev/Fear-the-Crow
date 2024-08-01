@@ -45,7 +45,7 @@ void Player::FixedUpdate(double _deltaTime)
 
     Accelerate(PLAYER_SPEED, PLAYER_GROUND_ACCELERATION);
     ProcessJump();
-    ApplyGravity();
+    //ApplyGravity();
 
     UpdateCamera();
     MouseLook(_deltaTime);
@@ -75,9 +75,12 @@ void Player::SetIsActive(bool _isActive)
     Husk::SetIsActive(_isActive);
 }
 
-bool Player::GetIsActive()
+bool Player::GetIsActive() { return Husk::GetIsActive(); }
+
+void Player::PrepareCollision()
 {
-    return Husk::GetIsActive();
+    //collider = *new btCollisionObject();
+   // collider.setCollisionShape(new btBoxShape(btVector3(1.0f, 2.0f, 2.0f)));
 }
 
 Vector3 Player::GetWishDir()

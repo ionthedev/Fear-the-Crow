@@ -4,8 +4,8 @@
 
 #ifndef GAMEOBJECT_H
 #define GAMEOBJECT_H
-#include "../main/PE_Core.h"
-#include "../main/Game.h"
+#include "../Core/Game.h"
+#include "../Core/PE_Core.h"
 
 
 class GameObject {

@@ -6,9 +6,8 @@
 #define FEARTHECROW_H
 
 #include "../engine/classes/Player.h"
-#include "../engine/main/PE_Core.h"
-#include "../engine/main/Game.h"
-#include "../engine/classes/Collision.h"
+#include "../engine/Core/PE_Core.h"
+#include "../engine/Core/Game.h"
 
 
 #define MAX_COLUMNS 20
@@ -20,7 +19,7 @@ public:
     {
         Model *model = nullptr;
         Vector3 *position = nullptr;
-        Collider *collider[100];
+        //Collider *collider[100];
     } worldObject;
 
     FearTheCrow() = default;

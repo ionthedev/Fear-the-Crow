@@ -52,7 +52,7 @@ void FearTheCrow::Start() const
 
     shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
 
-    ramp.collider[0] = new Collider();
+    //ramp.collider[0] = new Collider();
     ramp.model = new Model(LoadModel("../resources/Mesh/sm_ramp.gltf"));
     ramp.model->materials[0].shader = shader;
     ramp.model->materials[0].maps[MATERIAL_MAP_DIFFUSE].color = BLUE;
@@ -66,19 +66,19 @@ void FearTheCrow::Start() const
 
     level.position = new Vector3{0,0,0};
 
-    SetupColliderMesh(&player.collider, GenMeshCylinder(0.4f,2,6));
+    //SetupColliderMesh(&player.collider, GenMeshCylinder(0.4f,2,6));
 
-    SetupColliderMesh(ramp.collider[0],ramp.model->meshes[0]);
+    //SetupColliderMesh(ramp.collider[0],ramp.model->meshes[0]);
 
-    for (int i = 0; i < level.model->meshCount; i++)
+    /*for (int i = 0; i < level.model->meshCount; i++)
     {
         level.collider[i] = new Collider();
         SetupColliderMesh(level.collider[i],level.model->meshes[i]);
 
         UpdateCollider(*level.position,level.collider[i]);
-    }
+    }*/
 
-    UpdateCollider(*ramp.position,ramp.collider[0]);
+    //UpdateCollider(*ramp.position,ramp.collider[0]);
     // Generates some random columns
 
     for (int i = 0; i < MAX_COLUMNS; i++)
@@ -107,7 +107,7 @@ void FearTheCrow::FixedUpdate(double _deltaTime) const
 
     Vector3 originalVelocity = player.player_data.velocity;
 
-    if (CheckCollision(player.collider, *ramp.collider[0], &normal)) {
+    /*if (CheckCollision(player.collider, *ramp.collider[0], &normal)) {
         // Calculate the projection of the velocity on the collision normal
         Vector3 projection = Vector3Scale(normal, Vector3DotProduct(originalVelocity, normal));
 
@@ -147,10 +147,10 @@ void FearTheCrow::FixedUpdate(double _deltaTime) const
             }
         }
 
-    }
+    }*/
 
     // Update the collider position to reflect the player's new position
-    UpdateCollider(player.player_data.position, &player.collider);
+   // UpdateCollider(player.player_data.position, &player.collider);
 
     // Move the player based on the adjusted velocity
     player.player_data.position = Vector3Add(player.player_data.position, Vector3Scale(player.player_data.velocity, _deltaTime));
