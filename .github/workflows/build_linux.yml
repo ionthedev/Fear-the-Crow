@@ -5,12 +5,12 @@ on:
     branches: [ "main" ]
     paths-ignore:
       - "**/README.md"
-      - "**/.github/workflows/build_windows.yml"
+     # - "**/.github/workflows/build_windows.yml"
   pull_request:
     branches: [ "main" ]
     paths-ignore:
       - "**/README.md"
-      - "**/.github/workflows/build_windows.yml"
+      #- "**/.github/workflows/build_windows.yml"
 
 env:
   # Customize the CMake build type here (Release, Debug, RelWithDebInfo, etc.)
@@ -33,8 +33,7 @@ jobs:
             libxrandr-dev libxcursor-dev libxfixes-dev libxi-dev libxss-dev \
             libxkbcommon-dev libdrm-dev libgbm-dev libgl1-mesa-dev libgles2-mesa-dev \
             libegl1-mesa-dev libdbus-1-dev libibus-1.0-dev libudev-dev fcitx-libs-dev \
-            libglm-dev wayland-protocols wayland-dev wayland-scanner \
-            wayland-client wayland-server wayland-cursor wayland-egl
+            libglm-dev wayland-protocols libwayland-dev
 
       - name: Verify Wayland tools
         run: |
