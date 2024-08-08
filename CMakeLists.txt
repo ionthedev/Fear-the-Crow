@@ -1,22 +1,30 @@
-cmake_minimum_required(VERSION 3.14)
-project(Fear-The-Crow)
+cmake_minimum_required(VERSION 3.16)
+project(FearTheCrow)
 
-# Set C++ standard
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# Set the PhantomEngine root directory
+set(PHANTOM_ENGINE_DIR ../PhantomEngine)
 
-file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
-        "src/*.[hc]"
-        "src/*.[hc]pp")
+# Add PhantomEngine subdirectory with a specified binary directory
+#add_subdirectory(${PHANTOM_ENGINE_DIR} ${CMAKE_BINARY_DIR}/PhantomEngine)
 
-# Create an executable target for the game
-add_executable(Fear-The-Crow ${SOURCES})
+add_subdirectory(${PHANTOM_ENGINE_DIR} ${CMAKE_BINARY_DIR}/PhantomEngine)
+# Include directories
+include_directories(${PHANTOM_ENGINE_DIR}/src)
 
-# Link against the phantom-engine library
-target_link_libraries(Fear-The-Crow PhantomEngine raylib_cpp imgui rlimgui)
+# Add FearTheCrow executable
+add_executable(FearTheCrow
+        src/FearTheCrow.cpp
+        # Add other game source files
+)
 
-# Include directories from the phantom-engine
-target_include_directories(Fear-The-Crow PRIVATE
-        ${CMAKE_SOURCE_DIR}/PhantomEngine/src
-        # Add other include directories if needed
+# Link PhantomEngine
+target_link_libraries(FearTheCrow
+        PRIVATE
+        PhantomEngine
+        imgui
+        rlimgui
+        raylib_cpp
+        raylib
+        Bullet3Common
+        EnTT::EnTT
 )
