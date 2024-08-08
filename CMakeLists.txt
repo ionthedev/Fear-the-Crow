@@ -5,9 +5,9 @@ project(Fear-The-Crow)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(SOURCES
-    src/FearTheCrow.cpp
-)
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
+        "src/*.[hc]"
+        "src/*.[hc]pp")
 
 # Create an executable target for the game
 add_executable(Fear-The-Crow ${SOURCES})
