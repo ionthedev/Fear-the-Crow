@@ -1,28 +1,29 @@
-# FearTheCrow/CMakeLists.txt
-cmake_minimum_required(VERSION 3.16)
-project(FearTheCrow)
+cmake_minimum_required(VERSION 3.29)
+add_executable(FearTheCrow)
+add_executable(PH::FTC ALIAS FearTheCrow)
 
-set(CMAKE_CXX_STANDARD 17)
-set(PHANTOM_ENGINE_DIR ../phantom-engine)
-# Add PhantomEngine as an external project or a subdirectory
-if(!TOP_LEVEL)
-    add_subdirectory(${PHANTOM_ENGINE_DIR} ${CMAKE_BINARY_DIR}/phantom-engine)
-endif ()
+target_sources(
+        FearTheCrow
+        PRIVATE
+        "src/FearTheCrow.cpp"
+)
 
-# Include directories
-include_directories(${CMAKE_SOURCE_DIR}/src)
+target_include_directories(
+        FearTheCrow
+        PRIVATE
+        "src"
+)
 
-# Add the FearTheCrow executable
-
-add_executable(FearTheCrow src/FearTheCrow.cpp)
-
+set_target_properties(
+        FearTheCrow
+        PROPERTIES
+        CXX_STANDARD 17
+        CXX_STANDARD_REQUIRED TRUE
+)
 
 
 # Link against PhantomEngine
-target_link_libraries(FearTheCrow PUBLIC PhantomEngine)
-
-# Include directories
-target_include_directories(FearTheCrow
+target_link_libraries(
+        FearTheCrow
         PUBLIC
-        ${CMAKE_CURRENT_SOURCE_DIR}/../phantom-engine/src
-)
+        PhantomEngine)
