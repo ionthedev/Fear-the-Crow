@@ -17,16 +17,28 @@ namespace FTC {
     {
     }
 
-    void DemoScene::Start()
-    {
+    void DemoScene::Start() {
+        // Initialize Camera
+        camera.position = (Vector3){ 10.0f, 10.0f, 10.0f };
+        camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };
+        camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };
+        camera.fovy = 45.0f;
+        camera.projection = CAMERA_PERSPECTIVE;
+
+        // Load Shader
         shader = LoadShader(TextFormat("resources/Shaders/shader.vs", 330),
-                               TextFormat("/resources/Shaders/shader.fs", 330));
-        camera.position = (Vector3){ 10.0f, 10.0f, 10.0f }; // Camera position
-        camera.target = (Vector3){ 0.0f, 0.0f, 0.0f };      // Camera looking at point
-        camera.up = (Vector3){ 0.0f, 1.0f, 0.0f };          // Camera up vector (rotation towards target)
-        camera.fovy = 45.0f;                                // Camera field-of-view Y
-        camera.projection = CAMERA_PERSPECTIVE;             // Camera projection type
+                           TextFormat("resources/Shaders/shader.fs", 330));
+        shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
+
+        // Load Model
+        mapMesh = LoadModel("resources/Mesh/sm_ramp.gltf");
+        if (mapMesh.meshCount > 0) {
+            mapMesh.materials[0].shader = shader;
+        } else {
+            TraceLog(LOG_ERROR, "Failed to load model or model has no meshes.");
+        }
     }
+
 
     void DemoScene::Update(double _deltaTime)
     {
@@ -84,15 +96,6 @@ namespace FTC {
 
             EndMode3D();
 
-        if(FileExists("../resources/Mesh/sm_ramp.gltf"))
-        {
-
-            DrawText("FILE FOUND", 240, 50, 20, DARKGRAY);
-        }
-        else
-        {
-            DrawText("FILE NOT FOUND", 240, 50, 20, DARKGRAY);
-        }
 
 
 

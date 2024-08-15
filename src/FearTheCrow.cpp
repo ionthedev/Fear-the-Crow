@@ -44,6 +44,7 @@ public:
 void FearTheCrow::Start() const
 {
     Application::Start();
+
     activeScene->Start();
     InitWindow(800, 500, "Fear The Crow");
     SetTargetFPS(60);

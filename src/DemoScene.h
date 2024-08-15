@@ -11,7 +11,7 @@ namespace FTC {
 class DemoScene : public Phantom::Scene {
 public:
     DemoScene();
-    ~DemoScene();
+    ~DemoScene() override;
     void Start() override;
     void Update(double deltaTime) override;
 
@@ -21,9 +21,10 @@ public:
     Ray ray = { 0 };
     RayCollision collision = { 0 };
 
+
+    Shader shader;
     Model mapMesh;
 
-    mutable Shader shader;
 
 };
 
