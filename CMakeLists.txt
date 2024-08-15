@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.29)
-add_executable(FearTheCrow)
+add_executable(FearTheCrow
+        src/DemoScene.cpp
+        src/DemoScene.h)
 add_executable(PH::FTC ALIAS FearTheCrow)
 
 target_sources(
@@ -12,6 +14,7 @@ target_include_directories(
         FearTheCrow
         PRIVATE
         "src"
+        "resources"
 )
 
 set_target_properties(
