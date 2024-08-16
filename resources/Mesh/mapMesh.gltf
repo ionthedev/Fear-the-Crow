@@ -3,45 +3,79 @@
 		"generator":"Khronos glTF Blender I/O v4.2.57",
 		"version":"2.0"
 	},
+	"extensionsUsed":[
+		"KHR_lights_punctual"
+	],
+	"extensionsRequired":[
+		"KHR_lights_punctual"
+	],
+	"extensions":{
+		"KHR_lights_punctual":{
+			"lights":[
+				{
+					"color":[
+						1,
+						1,
+						1
+					],
+					"intensity":543.5141306588226,
+					"type":"point",
+					"name":"Point"
+				}
+			]
+		}
+	},
 	"scene":0,
 	"scenes":[
 		{
 			"name":"Scene",
 			"nodes":[
-				0,
 				1,
-				2
+				2,
+				3
 			]
 		}
 	],
 	"nodes":[
 		{
+			"extensions":{
+				"KHR_lights_punctual":{
+					"light":0
+				}
+			},
+			"name":"Point",
+			"rotation":[
+				-0.7071068286895752,
+				0,
+				0,
+				0.7071068286895752
+			],
+			"translation":[
+				-3.0557138919830322,
+				5.582113742828369,
+				-0.5619494915008545
+			]
+		},
+		{
+			"children":[
+				0
+			],
 			"mesh":0,
 			"name":"Cube"
 		},
 		{
 			"mesh":1,
-			"name":"Cube.001",
-			"translation":[
-				-10.03637981414795,
-				0,
-				0
-			]
+			"name":"Cube.001"
 		},
 		{
 			"mesh":2,
-			"name":"Cube.002",
-			"translation":[
-				-4.90123176574707,
-				0,
-				-15.597715377807617
-			]
+			"name":"Cube.002"
 		}
 	],
 	"materials":[
 		{
 			"doubleSided":true,
-			"name":"Material",
+			"name":"Material.001",
 			"pbrMetallicRoughness":{
 				"baseColorFactor":[
 					0.8003076910972595,
@@ -56,7 +90,7 @@
 	],
 	"meshes":[
 		{
-			"name":"Cube",
+			"name":"Cube.001",
 			"primitives":[
 				{
 					"attributes":{
@@ -70,7 +104,7 @@
 			]
 		},
 		{
-			"name":"Cube.001",
+			"name":"Cube.002",
 			"primitives":[
 				{
 					"attributes":{
@@ -84,7 +118,7 @@
 			]
 		},
 		{
-			"name":"Cube.002",
+			"name":"Cube.003",
 			"primitives":[
 				{
 					"attributes":{
@@ -138,12 +172,12 @@
 			"componentType":5126,
 			"count":24,
 			"max":[
-				1,
+				-9.03637981414795,
 				1,
 				1
 			],
 			"min":[
-				-1,
+				-11.03637981414795,
 				-1,
 				-1
 			],
@@ -166,14 +200,14 @@
 			"componentType":5126,
 			"count":24,
 			"max":[
+				-3.9012317657470703,
 				1,
-				1,
-				1
+				-14.597715377807617
 			],
 			"min":[
+				-5.90123176574707,
 				-1,
-				-1,
-				-1
+				-16.597715377807617
 			],
 			"type":"VEC3"
 		},

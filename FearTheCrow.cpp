@@ -4,12 +4,12 @@
 
 #include <iostream>
 
-#include "DemoScene.h"
-#include "PhantomPch.h"
-#include "Components/Transform2D.h"
-#include "Core/Engine.h"
-#include "Core/EntryPoint.h"
-#include "Core/Scene.h"
+#include "src/DemoScene.h"
+#include "../phantom-engine/src/PhantomPch.h"
+#include "../phantom-engine/src/Components/Transform2D.h"
+#include "../phantom-engine/src/Core/Engine.h"
+#include "../phantom-engine/src/Core/EntryPoint.h"
+#include "../phantom-engine/src/Core/Scene.h"
 
 class FearTheCrow : public Phantom::Application
 {
@@ -44,9 +44,8 @@ public:
 void FearTheCrow::Start() const
 {
     Application::Start();
-
-    activeScene->Start();
     InitWindow(800, 500, "Fear The Crow");
+    activeScene->Start();
     SetTargetFPS(60);
 
 

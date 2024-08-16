@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.29)
 add_executable(FearTheCrow
         src/DemoScene.cpp
         src/DemoScene.h
-        src/FearTheCrow.cpp
+        FearTheCrow.cpp
 )
 
 

@@ -25,19 +25,21 @@ namespace FTC {
         camera.fovy = 45.0f;
         camera.projection = CAMERA_PERSPECTIVE;
 
-        // Load Shader
         shader = LoadShader(TextFormat("resources/Shaders/shader.vs", 330),
-                           TextFormat("resources/Shaders/shader.fs", 330));
-        shader.locs[SHADER_LOC_VECTOR_VIEW] = GetShaderLocation(shader, "viewPos");
+                               TextFormat("resources/Shaders/shader.fs", 330));
 
-        // Load Model
-        mapMesh = LoadModel("resources/Mesh/sm_ramp.gltf");
-        if (mapMesh.meshCount > 0) {
-            mapMesh.materials[0].shader = shader;
-        } else {
-            TraceLog(LOG_ERROR, "Failed to load model or model has no meshes.");
+        mapMesh = LoadPMD("resources/Mesh/Demo.pmd");
+        if (mapMesh.meshCount == 0) {
+            TraceLog(LOG_ERROR, "Failed to load model!");
+            return;
         }
+        mapMesh.materials[0].shader = shader;
+        mapMesh.materials[0].maps[MATERIAL_MAP_DIFFUSE].color = BLUE;
+        // Additional debug information
+        TraceLog(LOG_INFO, "mapMesh: vertex count = %i", mapMesh.meshes[0].vertexCount);
+        TraceLog(LOG_INFO, "mapMesh: material count = %i", mapMesh.materialCount);
     }
+
 
 
     void DemoScene::Update(double _deltaTime)
@@ -78,7 +80,7 @@ namespace FTC {
 
                 if (collision.hit)
                 {
-                    DrawModel(mapMesh, cubePosition, 1.0f, GREEN);
+                    DrawModel(mapMesh, {0,0,0}, 1.0f, WHITE);
                     //DrawCube(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, RED);
                     DrawCubeWires(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, MAROON);
 
@@ -86,7 +88,7 @@ namespace FTC {
                 }
                 else
                 {
-                    DrawModel(mapMesh, cubePosition, 1.0f, GREEN);
+                    DrawModel(mapMesh, cubePosition, 1.0f, WHITE);
                     //DrawCube(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, GRAY);
                     DrawCubeWires(cubePosition, cubeSize.x, cubeSize.y, cubeSize.z, DARKGRAY);
                 }

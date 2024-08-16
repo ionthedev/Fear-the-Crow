@@ -8,6 +8,7 @@
 
 namespace FTC {
 
+
 class DemoScene : public Phantom::Scene {
 public:
     DemoScene();
@@ -21,7 +22,7 @@ public:
     Ray ray = { 0 };
     RayCollision collision = { 0 };
 
-
+protected:
     Shader shader;
     Model mapMesh;
 
