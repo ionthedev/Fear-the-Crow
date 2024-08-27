@@ -1,0 +1,9 @@
+[configuration]
+entry_symbol = "entrypoint"
+compatibility_minimum = 4.2
+reloadable = true
+
+[libraries]
+linux${DEBUG_POSTFIX}.x86_64 = "${LIBRARY_NAME}.so"
+macos${DEBUG_POSTFIX} = "${LIBRARY_NAME}.dylib"
+windows${DEBUG_POSTFIX}.x86_64 = "${LIBRARY_NAME}.dll"

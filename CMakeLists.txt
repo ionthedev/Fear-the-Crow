@@ -1,43 +1,33 @@
-cmake_minimum_required(VERSION 3.29)
+cmake_minimum_required(VERSION 3.28)
 
-add_executable(FearTheCrow
-        src/DemoScene.cpp
-        src/DemoScene.h
-        FearTheCrow.cpp
-)
+# Setup Root Project
+project("root")
 
+# Setup paths
+set(GODOT_PROJECT_PATH "godot_project") # Path to godot project
+set(GD_EXTENSIONS_PATH "bin") # Path to output gd extensions relative to godot project
 
+# Setup C++
+set(CMAKE_CXX_STANDARD 23)
 
-add_executable(PH::FTC ALIAS FearTheCrow)
+# Include helper functions
+include("cmake/Helpers.cmake")
+include("cmake/GodotHelpers.cmake")
 
-target_include_directories(
-        FearTheCrow
-        PRIVATE
-        "src"
-)
+# Download GDExtension
+download_godot_cpp(4.3)
 
-set_target_properties(
-        FearTheCrow
-        PROPERTIES
-        CXX_STANDARD 17
-        CXX_STANDARD_REQUIRED TRUE
-)
+# Setup platform architecture
+set(ARCHITECTURE ${CMAKE_SYSTEM_PROCESSOR})
+if (APPLE)
+    set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "")
+    set(ARCHITECTURE "universal")
+endif ()
 
-# Link against PhantomEngine
-target_link_libraries(
-        FearTheCrow
-        PUBLIC
-        PhantomEngine
-)
+# Setup compiler dependant options
+if (MINGW)
+    set(TARGET_LINK_LIBRARIES_OPTIONS "-static")
+endif ()
 
-# Set the resource directory relative to the CMakeLists.txt directory
-set(RESOURCE_DIR "${CMAKE_SOURCE_DIR}/Fear-the-Crow/resources")
-
-# Copy the resources folder to the build directory
-add_custom_command(
-        TARGET FearTheCrow POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_directory
-        "${RESOURCE_DIR}"
-        "$<TARGET_FILE_DIR:FearTheCrow>/resources"
-        COMMENT "Copying resources folder to build directory"
-)
+# Dynamically add all sub directories with a CMakeLists.txt
+add_all_subdirectories(${CMAKE_SOURCE_DIR})

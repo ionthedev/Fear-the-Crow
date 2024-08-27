@@ -1,58 +1,16 @@
-# Prerequisites
-*.d
+# Jetbrains
+.idea/
 
-# Object files
-*.o
-*.ko
-*.obj
-*.elf
+# Visual Studio
+.vs/
+out/
 
-# Linker output
-*.ilk
-*.map
-*.exp
+# CMake
+cmake-build-*/
 
-# Precompiled Headers
-*.gch
-*.pch
+# Godot
+.godot/
 
-# Libraries
-*.lib
-*.a
-*.la
-*.lo
-
-# Shared objects (inc. Windows DLLs)
-*.dll
+# Compiled Dynamic libraries
 *.so
-*.so.*
-*.dylib
-
-# Executables
-*.exe
-*.out
-*.app
-*.i*86
-*.x86_64
-*.hex
-
-# Debug files
-*.dSYM/
-*.su
-*.idb
-*.pdb
-
-# Kernel Module Compile Results
-*.mod*
-*.cmd
-.tmp_versions/
-modules.order
-Module.symvers
-Mkfile.old
-dkms.conf
-/cmake-build-debug/
-
-/.idea/
-/cmake-build-release/
-/thirdparty/imgui-docking/imgui/.github/
-/PhantomEngine/
+*.dll
