@@ -1,0 +1,9 @@
+[configuration]
+entry_symbol = "entrypoint"
+compatibility_minimum = 4.2
+reloadable = true
+
+[libraries]
+linux.debug.x86_64 = "FearTheCrow.so"
+macos.debug = "FearTheCrow.dylib"
+windows.debug.x86_64 = "FearTheCrow.dll"

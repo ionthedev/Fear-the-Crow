@@ -2,6 +2,7 @@
 #include <godot_cpp/godot.hpp>
 #include <godot_cpp/core/class_db.hpp>
 
+#include "Player.h"
 #include "print.h"
 
 using namespace godot;
@@ -11,7 +12,7 @@ void initializer(const ModuleInitializationLevel level) {
     return;
   }
 
-  ClassDB::register_runtime_class<Print>();
+  ClassDB::register_class<FearTheCrow::Player>();
 }
 
 void terminator(ModuleInitializationLevel level) {}
