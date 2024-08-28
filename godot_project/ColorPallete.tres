@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=3 format=3 uid="uid://bbnmf4rese4ee"]
+
+[ext_resource type="Shader" path="res://Retro2.gdshader" id="1_gcwvd"]
+[ext_resource type="Texture2D" uid="uid://tjl0p68d4eof" path="res://pico-8-1x.png" id="3_xsuti"]
+
+[resource]
+shader = ExtResource("1_gcwvd")
+shader_parameter/palette = ExtResource("3_xsuti")
