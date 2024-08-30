@@ -17,6 +17,6 @@ void fragment() {
 	vec4 c1 = texture(tex, UV - (c1off)/texSize);
 	vec2 c2off = vec2(offset.x, offset.y - sign(offset.y));
 	vec4 c2 = texture(tex, UV - (c2off)/texSize);
-	
+
 	ALBEDO = vec4(c0 + abs(offset.x)*(c1-c0) + abs(offset.y)*(c2-c0)).rgb;
 }

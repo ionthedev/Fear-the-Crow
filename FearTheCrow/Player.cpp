@@ -12,10 +12,114 @@ namespace FearTheCrow {
     void Player::_bind_methods()
     {
 
-        ClassDB::bind_method(D_METHOD("CreateCamera"), &Player::CreateCamera);
-        ClassDB::bind_method(D_METHOD("_handle_ground_physics"), &Player::_handle_ground_physics);
-        ClassDB::bind_method(D_METHOD("_handle_air_physics"), &Player::_handle_air_physics);
-    }
+        ClassDB::bind_method(D_METHOD("get_headbob_move_amount"), &Player::get_headbob_move_amount);
+        ClassDB::bind_method(D_METHOD("set_headbob_move_amount", "_speed"), &Player::set_headbob_move_amount);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "headbob_move_amount"), "set_headbob_move_amount", "get_headbob_move_amount");
+
+        ClassDB::bind_method(D_METHOD("get_headbob_frequency"), &Player::get_headbob_frequency);
+        ClassDB::bind_method(D_METHOD("set_headbob_frequency", "_speed"), &Player::set_headbob_frequency);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "headbob_frequency"), "set_headbob_frequency", "get_headbob_frequency");
+
+        ClassDB::bind_method(D_METHOD("get_headbob_time"), &Player::get_headbob_time);
+        ClassDB::bind_method(D_METHOD("set_headbob_time", "_speed"), &Player::set_headbob_time);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "headbob_time"), "set_headbob_time", "get_headbob_time");
+
+        ClassDB::bind_method(D_METHOD("get_walk_speed"), &Player::get_walk_speed);
+        ClassDB::bind_method(D_METHOD("set_walk_speed", "_speed"), &Player::set_walk_speed);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "walk_speed"), "set_walk_speed", "get_walk_speed");
+
+        ClassDB::bind_method(D_METHOD("get_sprint_speed"), &Player::get_sprint_speed);
+        ClassDB::bind_method(D_METHOD("set_sprint_speed", "_speed"), &Player::set_sprint_speed);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "sprint_speed"), "set_sprint_speed", "get_sprint_speed");
+
+        ClassDB::bind_method(D_METHOD("get_ground_accel"), &Player::get_ground_accel);
+        ClassDB::bind_method(D_METHOD("set_ground_accel", "_speed"), &Player::set_ground_accel);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "ground_accel"), "set_ground_accel", "get_ground_accel");
+
+        ClassDB::bind_method(D_METHOD("get_ground_decel"), &Player::get_ground_decel);
+        ClassDB::bind_method(D_METHOD("set_ground_decel", "_speed"), &Player::set_ground_decel);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "ground_decel"), "set_ground_decel", "get_ground_decel");
+
+        ClassDB::bind_method(D_METHOD("get_ground_friction"), &Player::get_ground_friction);
+        ClassDB::bind_method(D_METHOD("set_ground_friction", "_speed"), &Player::set_ground_friction);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "ground_friction"), "set_ground_friction", "get_ground_friction");
+
+        ClassDB::bind_method(D_METHOD("get_air_cap"), &Player::get_air_cap);
+        ClassDB::bind_method(D_METHOD("set_air_cap", "_speed"), &Player::set_air_cap);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "air_cap"), "set_air_cap", "get_air_cap");
+
+        ClassDB::bind_method(D_METHOD("get_air_accel"), &Player::get_air_accel);
+        ClassDB::bind_method(D_METHOD("set_air_accel", "_speed"), &Player::set_air_accel);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "air_accel"), "set_air_accel", "get_air_accel");
+
+        ClassDB::bind_method(D_METHOD("get_air_move_speed"), &Player::get_air_move_speed);
+        ClassDB::bind_method(D_METHOD("set_air_move_speed", "_speed"), &Player::set_air_move_speed);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "air_move_speed"), "set_air_move_speed", "get_air_move_speed");
+
+        ClassDB::bind_method(D_METHOD("get_gravity"), &Player::get_gravity);
+        ClassDB::bind_method(D_METHOD("set_gravity", "_speed"), &Player::set_gravity);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "gravity"), "set_gravity", "get_gravity");
+
+        ClassDB::bind_method(D_METHOD("get_swim_up_speed"), &Player::get_swim_up_speed);
+        ClassDB::bind_method(D_METHOD("set_swim_up_speed", "_speed"), &Player::set_swim_up_speed);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "swim_up_speed"), "set_swim_up_speed", "get_swim_up_speed");
+
+        ClassDB::bind_method(D_METHOD("get_climb_speed"), &Player::get_climb_speed);
+        ClassDB::bind_method(D_METHOD("set_climb_speed", "_speed"), &Player::set_climb_speed);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "climb_speed"), "set_climb_speed", "get_climb_speed");
+
+        ClassDB::bind_method(D_METHOD("get_crouch_translate"), &Player::get_crouch_translate);
+        ClassDB::bind_method(D_METHOD("set_crouch_translate", "_speed"), &Player::set_crouch_translate);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "crouch_translate"), "set_crouch_translate", "get_crouch_translate");
+
+        ClassDB::bind_method(D_METHOD("get_crouch_jump_add"), &Player::get_crouch_jump_add);
+        ClassDB::bind_method(D_METHOD("set_crouch_jump_add", "_speed"), &Player::set_crouch_jump_add);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "crouch_jump_add"), "set_crouch_jump_add", "get_crouch_jump_add");
+
+        ClassDB::bind_method(D_METHOD("get_noclip_speed_mult"), &Player::get_noclip_speed_mult);
+        ClassDB::bind_method(D_METHOD("set_noclip_speed_mult", "_speed"), &Player::set_noclip_speed_mult);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "noclip_speed_mult"), "set_noclip_speed_mult", "get_noclip_speed_mult");
+
+        ClassDB::bind_method(D_METHOD("get_max_step_height"), &Player::get_max_step_height);
+        ClassDB::bind_method(D_METHOD("set_max_step_height", "_speed"), &Player::set_max_step_height);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "max_step_height"), "set_max_step_height", "get_max_step_height");
+
+        ClassDB::bind_method(D_METHOD("get_auto_bhop"), &Player::get_auto_bhop);
+        ClassDB::bind_method(D_METHOD("set_auto_bhop", "_speed"), &Player::set_auto_bhop);
+        ClassDB::add_property("Player", PropertyInfo(Variant::BOOL, "auto_bhop"), "set_auto_bhop", "get_auto_bhop");
+
+        ClassDB::bind_method(D_METHOD("get_noclip"), &Player::get_noclip);
+        ClassDB::bind_method(D_METHOD("set_noclip", "_speed"), &Player::set_noclip);
+        ClassDB::add_property("Player", PropertyInfo(Variant::BOOL, "noclip"), "set_noclip", "get_noclip");
+
+        ClassDB::bind_method(D_METHOD("get_controller_look_sensitivity"), &Player::get_controller_look_sensitivity);
+        ClassDB::bind_method(D_METHOD("set_controller_look_sensitivity", "_speed"), &Player::set_controller_look_sensitivity);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "controller_sensitivity"), "set_controller_look_sensitivity", "get_controller_look_sensitivity");
+
+        ClassDB::bind_method(D_METHOD("get_mouse_look_sensitivity"), &Player::get_mouse_look_sensitivity);
+        ClassDB::bind_method(D_METHOD("set_mouse_look_sensitivity", "_speed"), &Player::set_mouse_look_sensitivity);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "mouse_sensitivity"), "set_mouse_look_sensitivity", "get_mouse_look_sensitivity");
+
+        ClassDB::bind_method(D_METHOD("get_jump_velocity"), &Player::get_jump_velocity);
+        ClassDB::bind_method(D_METHOD("set_jump_velocity", "_speed"), &Player::set_jump_velocity);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "jump_velocity"), "set_jump_velocity", "get_jump_velocity");
+
+        ClassDB::bind_method(D_METHOD("get_player_height"), &Player::get_player_height);
+        ClassDB::bind_method(D_METHOD("set_player_height", "_speed"), &Player::set_player_height);
+        ClassDB::add_property("Player", PropertyInfo(Variant::VECTOR2, "player_height"), "set_player_height", "get_player_height");
+
+        ClassDB::bind_method(D_METHOD("get_capsule_height"), &Player::get_capsule_height);
+        ClassDB::bind_method(D_METHOD("set_capsule_height", "_speed"), &Player::set_capsule_height);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "capsule_height"), "set_capsule_height", "get_capsule_height");
+
+        ClassDB::bind_method(D_METHOD("get_capsule_radius"), &Player::get_capsule_radius);
+        ClassDB::bind_method(D_METHOD("set_capsule_radius", "_speed"), &Player::set_capsule_radius);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "capsule_radius"), "set_capsule_radius", "get_capsule_radius");
+
+        ClassDB::bind_method(D_METHOD("get_speed_jump_mult"), &Player::get_speed_jump_mult);
+        ClassDB::bind_method(D_METHOD("set_speed_jump_mult", "_speed"), &Player::set_speed_jump_mult);
+        ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "speed_jump_mult"), "set_speed_jump_mult", "get_speed_jump_mult");
+}
 
     Player::Player() {}
 
@@ -23,8 +127,10 @@ namespace FearTheCrow {
     {
         HeadOriginalPosition = memnew(Node3D);
         add_child(HeadOriginalPosition);
-        HeadOriginalPosition->set_transform(Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.79, 0));
-
+        Vector3 _headPos = HeadOriginalPosition->get_position();
+        _headPos.y = ConvertImperialToMetric(PlayerHeight) - (6 * 0.0254f);
+        HeadOriginalPosition->set_position(_headPos);
+        //HeadOriginalPosition->set_position(Vector3(HeadOriginalPosition->get_position().x, HeadOriginalPosition->get_position().y-2.f, HeadOriginalPosition->get_position().z));
         Head = memnew(Node3D);
         HeadOriginalPosition->add_child(Head);
 
@@ -52,7 +158,6 @@ namespace FearTheCrow {
         }
 
         CameraSmooth->add_child(camera);
-        camera->set_position(Vector3(0, 1.5f, 0));
 
         if (camera->is_inside_tree()) {
             UtilityFunctions::print("Camera added to tree successfully.");
@@ -69,7 +174,7 @@ namespace FearTheCrow {
     void Player::_process(double p_delta)
     {
         CharacterBody3D::_process(p_delta);
-        //_handle_controller_look_input(p_delta);
+        _handle_controller_look_input(p_delta);
 
     }
 
@@ -104,7 +209,8 @@ namespace FearTheCrow {
                     if(Input::get_singleton()->is_action_just_pressed("Jump") || (auto_bhop && Input::get_singleton()->is_action_pressed("Jump")))
                     {
                         Vector3 v = this->get_velocity();
-                           v.y = jump_velocity;
+
+                           v.y += jump_velocity * (Vector2(get_velocity().x, get_velocity().z).length() >= sprint_speed ? Vector2(get_velocity().x, get_velocity().z).length()  * SPEED_JUMP_MULT : 23.444444444);
                         this->set_velocity(v);
                     }
                     _handle_ground_physics(p_delta);
@@ -142,7 +248,8 @@ namespace FearTheCrow {
             auto *mouseMotionEvent = dynamic_cast<InputEventMouseMotion *>(*p_event);
             rotate_y(-mouseMotionEvent->get_relative().x * look_sensitivity);
             camera->rotate_x(-mouseMotionEvent->get_relative().y * look_sensitivity);
-            camera->set_rotation(Vector3(Math::clamp(camera->get_rotation().x , Math::deg_to_rad(-90.f), Math::deg_to_rad(90.f)) , camera->get_rotation().y, camera->get_rotation().z));
+            float camX = is_on_floor() ? Math::clamp(camera->get_rotation().x , Math::deg_to_rad(-90.f), Math::deg_to_rad(90.f)) : camera->get_rotation().x;
+            camera->set_rotation(Vector3( camX , camera->get_rotation().y, camera->get_rotation().z));
         }
 
         if(p_event->is_class("InputEventMouseButton") && p_event->is_pressed())
@@ -161,13 +268,21 @@ namespace FearTheCrow {
         }
     }
 
-    void Player::_headbob_effect(double delta)
+    void Player::_headbob_effect(float delta)
     {
         headbob_time += delta * this->get_velocity().length();
-        camera->get_transform().origin = Vector3(
-        cos(headbob_time * HEADBOB_FREQUENCY * 0.5) * HEADBOB_MOVE_AMOUNT,
-        sin(headbob_time * HEADBOB_FREQUENCY) * HEADBOB_MOVE_AMOUNT,
-        0);
+        Transform3D _t = camera->get_transform();
+        Vector3 o;
+
+        float t = headbob_time;
+        float f = HEADBOB_FREQUENCY;
+        float a = HEADBOB_MOVE_AMOUNT;
+
+        float x = cos(t * f * 0.5f) * a;
+        float y = sin(t * f) * a;
+        o = Vector3(x, y ,0);
+        _t.set_origin(o);
+        camera->set_transform(_t);
 
     }
 
@@ -188,7 +303,10 @@ namespace FearTheCrow {
 
         rotate_y(-_cur_controller_look.x * controller_look_sensitivity); // turn left and right
         camera->rotate_x(_cur_controller_look.y * controller_look_sensitivity); // look up and down
-        camera->set_rotation(Vector3(Math::clamp(camera->get_rotation().x , Math::deg_to_rad(-90.f), Math::deg_to_rad(90.f)) , camera->get_rotation().y, camera->get_rotation().z)); // clamp up and down range
+
+        float camX = is_on_floor() ? Math::clamp(camera->get_rotation().x , Math::deg_to_rad(-90.f), Math::deg_to_rad(90.f)) : camera->get_rotation().x;
+
+        camera->set_rotation(Vector3( camX , camera->get_rotation().y, camera->get_rotation().z)); // clamp up and down range
     }
 
 
@@ -220,14 +338,14 @@ namespace FearTheCrow {
         v *= new_speed;
         this->set_velocity(v);
 
-        _headbob_effect(delta);
+        _headbob_effect(fDelta);
     }
 
     void Player::_handle_air_physics(double delta)
     {
         float fDelta = static_cast<float>(delta);
         Vector3 v = this->get_velocity();
-        v.y -= 9.8f * fDelta;
+        v.y -= gravity * fDelta;
         this->set_velocity(v);
         float cur_speed_in_wish_dir = this->get_velocity().dot(wishDir);
         float add_speed_till_cap = get_move_speed() - cur_speed_in_wish_dir;
@@ -262,11 +380,13 @@ namespace FearTheCrow {
 
         Ref<CapsuleShape3D> colShape;
         colShape.instantiate();
-        colShape->set_height(2.0f);
-        colShape->set_radius(0.5f);
+        colShape->set_height(ConvertImperialToMetric(PlayerHeight));
+        colShape->set_radius(capsule_radius);
         col->set_shape(colShape);
-        col->set_transform(Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0));
+        //col->set_transform(Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0));
         this->add_child(col);
+
+        playerInitialized = true;
     }
 
     void Player::CreateBody() {
@@ -369,20 +489,20 @@ bool Player::StepUpStairsCheck(const double delta) {
 
 
     void Player::SmoothCamera(double delta) {
-        if(savedCameraPosition == Vector3(0,0,0)) return;
-        Vector3 gp = CameraSmooth->get_global_position();
-        gp.y = savedCameraPosition.y;
-        CameraSmooth->set_global_position(gp);
-        Vector3 camSmoothPos = CameraSmooth->get_position();
-        camSmoothPos.y = Math::clamp(camSmoothPos.y, -CROUCH_TRANSLATE, CROUCH_TRANSLATE);
-        float moveAmount = Math::max(this->get_velocity().length() * static_cast<float>(delta), walk_speed/2 * static_cast<float>(delta));
-        camSmoothPos.y = Math::move_toward(camSmoothPos.y, 0.0f, moveAmount);
-        CameraSmooth->set_position(camSmoothPos);
-        savedCameraPosition = camera->get_global_position();
-        if(camSmoothPos.y == 0)
+        if (savedCameraPosition == Vector3(0,0,0)) return;
+        Vector3 CS_GP = CameraSmooth->get_global_position();
+        Vector3 CS_LP = CameraSmooth->get_position();
+        CS_GP.y = savedCameraPosition.y;
+        CS_LP.y = Math::clamp(CS_LP.y, -CROUCH_TRANSLATE, CROUCH_TRANSLATE);
+        float move_amount = Math::max(get_velocity().length() * delta, walk_speed/2 * delta);
+        CS_LP.y = Math::move_toward(CS_LP.y, 0.0f, move_amount);
+        savedCameraPosition = CS_GP;
+        if(CS_LP.y == 0)
         {
             savedCameraPosition = Vector3(0,0,0);
         }
+        CameraSmooth->set_global_position(CS_GP);
+        CameraSmooth->set_position(CS_LP);
     }
 
     void Player::_push_away_rigid_bodies()
@@ -416,7 +536,7 @@ bool Player::StepUpStairsCheck(const double delta) {
         {
 
             Vector3 v = this->get_velocity();
-            v.y -= 9.8f * 0.1f * static_cast<float>(fDelta);
+            v.y -= gravity * 0.1f * static_cast<float>(fDelta);
             this->set_velocity(v);
         }
 
@@ -434,8 +554,6 @@ bool Player::StepUpStairsCheck(const double delta) {
     {
         if(Engine::get_singleton()->is_editor_hint()) return;
         bool was_crouched_last_frame = is_crouched;
-
-
 
         Vector3 colPos = col->get_position();
         Ref<CapsuleShape3D> colShape = col->get_shape();
@@ -456,26 +574,27 @@ bool Player::StepUpStairsCheck(const double delta) {
             translate_y_if_possible = (is_crouched) ? CROUCH_JUMP_ADD : -CROUCH_JUMP_ADD;
         }
 
-        Vector3 cPos = camera->get_position();
+        Vector3 hPos = Head->get_position();
         if(translate_y_if_possible != 0)
         {
-            Ref<KinematicCollision3D> result = memnew(KinematicCollision3D);
-            test_move(get_transform(), Vector3(0, translate_y_if_possible, 0), result);
+            Ref result = memnew(KinematicCollision3D);
+            test_move(get_global_transform(), Vector3(0, translate_y_if_possible, 0), result);
             Vector3 pos = get_position();
             pos.y += result->get_travel().y;
             set_position(pos);
-            cPos.y -= result->get_travel().y;
-            cPos.y = Math::clamp(cPos.y, -CROUCH_TRANSLATE, 1.0f);
-            camera->set_position(cPos);
+            hPos.y -= result->get_travel().y;
+            hPos.y = Math::clamp(hPos.y, -CROUCH_TRANSLATE, 0.0f);
+            Head->set_position(hPos);
         }
 
 
-        camera->set_position(Vector3(0, Math::move_toward(camera->get_position().y, (is_crouched) ? CROUCH_TRANSLATE : 1 , 3.0f * (float)delta),0));
-        colShape->set_height((is_crouched) ? 1.5 - CROUCH_TRANSLATE : 1.5f);
+        hPos.y = Math::move_toward(hPos.y, (is_crouched) ? -CROUCH_TRANSLATE : 0.f , 7.0f * (float)delta);
+        colShape->set_height((is_crouched) ? ConvertImperialToMetric(PlayerHeight) - CROUCH_TRANSLATE : ConvertImperialToMetric(PlayerHeight));
 
         col->set_shape(colShape);
         colPos.y = (float)colShape->get_height() / 2.0f;
         col->set_position(colPos);
+        Head->set_position(hPos);
         //UtilityFunctions::print(actor_vars._snapped_to_stairs_last_frame);
 
     }
@@ -538,6 +657,7 @@ bool Player::StepUpStairsCheck(const double delta) {
         Vector2 mouseMotion = p_event->get_relative();
         camera->rotate_y(Math::deg_to_rad(-mouseMotion.x * look_sensitivity));
         mouseRotation.x += Math::deg_to_rad(-mouseMotion.y * look_sensitivity);
+
         mouseRotation.x = Math::clamp(mouseRotation.x, Math::deg_to_rad(-89.0f), Math::deg_to_rad(89.0f));
 
         mouseRotation.z += Math::deg_to_rad(-mouseMotion.y * look_sensitivity * inputDir.length());
@@ -565,6 +685,292 @@ bool Player::StepUpStairsCheck(const double delta) {
         return walk_speed;
     }
 
+    float Player::ConvertImperialToMetric(Vector2 height)
+    {
+        float feet = height.x;
+        float inches = height.y;
+        const float feet_to_meters = 0.3048f;
+        const float inches_to_meters = 0.0254f;
+
+        float meters_from_feet = feet * feet_to_meters;
+        float meters_from_inches = inches * inches_to_meters;
+        float total_meters = meters_from_feet + meters_from_inches;
+        return total_meters;
+    }
+
+    float Player::get_headbob_move_amount()
+    {
+        return HEADBOB_MOVE_AMOUNT;
+    }
+
+    float Player::get_headbob_frequency()
+    {
+        return HEADBOB_FREQUENCY;
+    }
+
+    float Player::get_headbob_time()
+    {
+        return headbob_time;
+    }
+
+    float Player::get_walk_speed()
+    {
+        return walk_speed;
+    }
+
+    float Player::get_sprint_speed()
+    {
+        return sprint_speed;
+    }
+
+    float Player::get_ground_accel()
+    {
+        return ground_accel;
+    }
+
+    float Player::get_ground_decel()
+    {
+        return ground_decel;
+    }
+
+    float Player::get_ground_friction()
+    {
+        return ground_friction;
+    }
+
+    float Player::get_air_cap()
+    {
+        return air_cap;
+    }
+
+    float Player::get_air_accel()
+    {
+        return air_accel;
+    }
+
+    float Player::get_air_move_speed()
+    {
+        return air_move_speed;
+    }
+
+    float Player::get_gravity()
+    {
+        return gravity;
+    }
+
+    float Player::get_swim_up_speed()
+    {
+        return swim_up_speed;
+    }
+
+    float Player::get_climb_speed()
+    {
+        return climb_speed;
+    }
+
+    float Player::get_crouch_translate()
+    {
+        return CROUCH_TRANSLATE;
+    }
+
+    float Player::get_crouch_jump_add()
+    {
+        return CROUCH_JUMP_ADD / CROUCH_TRANSLATE;
+    }
+
+    float Player::get_noclip_speed_mult()
+    {
+        return noclip_speed_mult;
+    }
+
+    float Player::get_max_step_height()
+    {
+        return MAX_STEP_HEIGHT;
+    }
+
+    bool Player::get_auto_bhop()
+    {
+        return auto_bhop;
+    }
+
+    bool Player::get_noclip()
+    {
+        return noclip;
+    }
+
+    float Player::get_mouse_look_sensitivity()
+    {
+        return look_sensitivity;
+    }
+
+    float Player::get_controller_look_sensitivity()
+    {
+        return controller_look_sensitivity;
+    }
+
+    float Player::get_jump_velocity()
+    {
+        return jump_velocity;
+    }
+
+    Vector2 Player::get_player_height()
+    {
+        return PlayerHeight;
+    }
+
+    float Player::get_speed_jump_mult()
+    {
+        return SPEED_JUMP_MULT;
+    }
+
+
+    float Player::get_capsule_height()
+    {
+        return capsule_height;
+    }
+
+    float Player::get_capsule_radius()
+    {
+        return capsule_radius;
+    }
+
+    void Player::set_headbob_move_amount(float amount)
+    {
+        HEADBOB_MOVE_AMOUNT = amount;
+    }
+
+    void Player::set_headbob_frequency(float frequency)
+    {
+        HEADBOB_FREQUENCY = frequency;
+    }
+
+    void Player::set_headbob_time(float time)
+    {
+        headbob_time = time;
+    }
+
+    void Player::set_walk_speed(float speed)
+    {
+        walk_speed = speed;
+    }
+
+    void Player::set_sprint_speed(float speed)
+    {
+        sprint_speed = speed;
+    }
+
+    void Player::set_ground_accel(float accel)
+    {
+        ground_accel = accel;
+    }
+
+    void Player::set_ground_decel(float decel)
+    {
+        ground_decel = decel;
+    }
+
+    void Player::set_ground_friction(float friction)
+    {
+        ground_friction = friction;
+    }
+
+    void Player::set_air_cap(float cap)
+    {
+        air_cap = cap;
+    }
+
+    void Player::set_air_accel(float accel)
+    {
+        air_accel = accel;
+    }
+
+    void Player::set_air_move_speed(float speed)
+    {
+        air_move_speed = speed;
+    }
+
+    void Player::set_gravity(float _gravity)
+    {
+        gravity = _gravity;
+    }
+
+    void Player::set_swim_up_speed(float speed)
+    {
+        swim_up_speed = speed;
+    }
+
+    void Player::set_climb_speed(float speed)
+    {
+        climb_speed = speed;
+    }
+
+    void Player::set_crouch_translate(float translate)
+    {
+        CROUCH_TRANSLATE = translate;
+    }
+
+    void Player::set_crouch_jump_add(float add)
+    {
+        CROUCH_JUMP_ADD = get_crouch_translate() * add;
+    }
+
+    void Player::set_noclip_speed_mult(float mult)
+    {
+        noclip_speed_mult = mult;
+    }
+
+    void Player::set_max_step_height(float height)
+    {
+        MAX_STEP_HEIGHT = height;
+    }
+
+    void Player::set_auto_bhop(bool bhop)
+    {
+        auto_bhop = bhop;
+    }
+
+    void Player::set_noclip(bool _noclip)
+    {
+        noclip = _noclip;
+    }
+
+    void Player::set_controller_look_sensitivity(float _sens)
+    {
+        controller_look_sensitivity = _sens;
+    }
+
+    void Player::set_mouse_look_sensitivity(float _sens)
+    {
+        look_sensitivity = _sens;
+    }
+
+    void Player::set_jump_velocity(float force)
+    {
+        jump_velocity = force;
+    }
+
+    void Player::set_player_height(Vector2 pos)
+    {
+        PlayerHeight = pos;
+        UpdatePlayerSizeAttributes();
+    }
+
+    void Player::set_speed_jump_mult(float mult)
+    {
+        SPEED_JUMP_MULT = mult;
+    }
+
+    void Player::set_capsule_height(float height)
+    {
+        capsule_height = height;
+        UpdatePlayerSizeAttributes();
+    }
+
+    void Player::set_capsule_radius(float radius)
+    {
+        capsule_radius = radius;
+        UpdatePlayerSizeAttributes();
+    }
 
 
     void Player::_add_velocity_x(float value)
@@ -608,4 +1014,15 @@ bool Player::StepUpStairsCheck(const double delta) {
     this->set_velocity(v);
 }
 
+    void Player::UpdatePlayerSizeAttributes()
+    {
+        if(!playerInitialized) return;
+        Vector3 _headPos = HeadOriginalPosition->get_position();
+        _headPos.y = ConvertImperialToMetric(PlayerHeight) - (6 * 0.0254f);
+        HeadOriginalPosition->set_position(_headPos);
+        savedCameraPosition = get_global_position();
+        Ref<CapsuleShape3D> shape = col->get_shape();
+        shape->set_height(ConvertImperialToMetric(PlayerHeight));
+        shape->set_radius(capsule_radius);
+    }
 } // FearTheCrow

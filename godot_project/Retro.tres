@@ -4,7 +4,7 @@
 
 [resource]
 shader = ExtResource("1_mb837")
-shader_parameter/shake = 0.015
+shader_parameter/shake = 0.011
 shader_parameter/noiseQuality = 250.0
 shader_parameter/noiseIntensity = 0.001
 shader_parameter/offsetIntensity = 0.0045

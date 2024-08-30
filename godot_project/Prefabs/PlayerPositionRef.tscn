@@ -1,0 +1,31 @@
+[gd_scene load_steps=4 format=3 uid="uid://yf7bflcl5jof"]
+
+[ext_resource type="PackedScene" uid="uid://cdlebv74ulaxk" path="res://Prefabs/Weapons/Shotgun/SM_Shotgun.tscn" id="1_egeo8"]
+[ext_resource type="PackedScene" uid="uid://dpogyhm4i5pkd" path="res://Prefabs/Weapons/Pistol/SM_Pistol.tscn" id="2_e023i"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_3n5w4"]
+height = 1.778
+
+[node name="Player Size Reference" type="CharacterBody3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_3n5w4")
+
+[node name="HeadOrigin" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.626, 0)
+
+[node name="Head" type="Node3D" parent="HeadOrigin"]
+
+[node name="Camera Smooth" type="Node3D" parent="HeadOrigin/Head"]
+
+[node name="Camera3D" type="Camera3D" parent="HeadOrigin/Head/Camera Smooth"]
+
+[node name="WeaponMarker" type="Marker3D" parent="HeadOrigin/Head/Camera Smooth/Camera3D"]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0.145, -0.15, -0.1)
+
+[node name="SM_Shotgun" parent="HeadOrigin/Head/Camera Smooth/Camera3D/WeaponMarker" instance=ExtResource("1_egeo8")]
+visible = false
+
+[node name="SM_Pistol" parent="HeadOrigin/Head/Camera Smooth/Camera3D/WeaponMarker" instance=ExtResource("2_e023i")]
+visible = false
