@@ -119,7 +119,8 @@ namespace FearTheCrow {
         ClassDB::bind_method(D_METHOD("get_speed_jump_mult"), &Player::get_speed_jump_mult);
         ClassDB::bind_method(D_METHOD("set_speed_jump_mult", "_speed"), &Player::set_speed_jump_mult);
         ClassDB::add_property("Player", PropertyInfo(Variant::FLOAT, "speed_jump_mult"), "set_speed_jump_mult", "get_speed_jump_mult");
-}
+
+    }
 
     Player::Player() {}
 
@@ -266,6 +267,35 @@ namespace FearTheCrow {
 
             }
         }
+
+        if(p_event->is_action_released("Weapon_1"))
+        {
+            SwitchWeapon(1);
+        }
+
+        if(p_event->is_action_released("Weapon_2"))
+        {
+            SwitchWeapon(2);
+        }
+
+        if(p_event->is_action_released("Weapon_3"))
+        {
+            SwitchWeapon(3);
+        }
+
+        if(p_event->is_action_released("Weapon_4"))
+        {
+            SwitchWeapon(4);
+        }
+
+        if(p_event->is_action_released("Weapon_5"))
+        {
+            SwitchWeapon(5);
+        }
+
+
+
+
     }
 
     void Player::_headbob_effect(float delta)
@@ -696,6 +726,11 @@ bool Player::StepUpStairsCheck(const double delta) {
         float meters_from_inches = inches * inches_to_meters;
         float total_meters = meters_from_feet + meters_from_inches;
         return total_meters;
+    }
+
+    void Player::SwitchWeapon(int index)
+    {
+
     }
 
     float Player::get_headbob_move_amount()

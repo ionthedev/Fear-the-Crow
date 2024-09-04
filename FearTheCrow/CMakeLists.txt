@@ -9,7 +9,16 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
 # Setup project as dynamic library with source code
 add_library("${PROJECT_NAME}" SHARED "${SOURCES}"
         Player.cpp
-        Player.h)
+        Player.h
+        WeaponSystem/WeaponFeature.cpp
+        WeaponSystem/WeaponFeature.h
+        WeaponSystem/Features/SingleHitscanFeature.cpp
+        WeaponSystem/Features/SingleHitscanFeature.h
+        WeaponSystem/WeaponSystem.cpp
+        WeaponSystem/WeaponSystem.h
+        WeaponSystem/Weapon.cpp
+        WeaponSystem/Weapon.h
+)
 
 # Add godot cpp to the library
 target_link_libraries(${PROJECT_NAME} PRIVATE "godot-cpp" ${TARGET_LINK_LIBRARIES_OPTIONS})

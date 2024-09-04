@@ -70,6 +70,7 @@ using namespace godot;
         void _mouse_look(const Ref<InputEventMouseMotion> &p_event);
         float get_move_speed();
         float ConvertImperialToMetric(Vector2 height);
+        void SwitchWeapon(int index);
 
 
         //Getters
@@ -173,11 +174,10 @@ using namespace godot;
         Node3D* Head;
         Node3D* CameraSmooth;
 
-         float look_sensitivity= 0.006f;
-         float controller_look_sensitivity = 0.05f;
-
-         float jump_velocity = .27f;
-         bool auto_bhop = true;
+        float look_sensitivity= 0.006f;
+        float controller_look_sensitivity = 0.05f;
+        float jump_velocity = .27f;
+        bool auto_bhop = true;
         bool playerInitialized = false;
 
         float HEADBOB_MOVE_AMOUNT = 0.06f;

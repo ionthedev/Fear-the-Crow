@@ -4,6 +4,10 @@
 
 #include "Player.h"
 #include "print.h"
+#include "WeaponSystem/Weapon.h"
+#include "WeaponSystem/WeaponFeature.h"
+#include "WeaponSystem/Features/SingleHitscanFeature.h"
+
 
 using namespace godot;
 
@@ -13,6 +17,10 @@ void initializer(const ModuleInitializationLevel level) {
   }
 
   ClassDB::register_class<FearTheCrow::Player>();
+  ClassDB::register_class<FearTheCrow::Weapon>();
+
+  ClassDB::register_class<FearTheCrow::WeaponFeature>();
+  ClassDB::register_class<FearTheCrow::SingleHitscanFeature>();
 }
 
 void terminator(ModuleInitializationLevel level) {}
