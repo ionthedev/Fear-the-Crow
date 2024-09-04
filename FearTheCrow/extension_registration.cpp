@@ -6,6 +6,8 @@
 #include "print.h"
 #include "WeaponSystem/Weapon.h"
 #include "WeaponSystem/WeaponFeature.h"
+#include "WeaponSystem/WeaponSystem.h"
+#include "WeaponSystem/WeaponTrigger.h"
 #include "WeaponSystem/Features/SingleHitscanFeature.h"
 
 
@@ -17,9 +19,11 @@ void initializer(const ModuleInitializationLevel level) {
   }
 
   ClassDB::register_class<FearTheCrow::Player>();
+  ClassDB::register_class<FearTheCrow::WeaponSystem>();
   ClassDB::register_class<FearTheCrow::Weapon>();
 
   ClassDB::register_class<FearTheCrow::WeaponFeature>();
+  ClassDB::register_class<FearTheCrow::WeaponTrigger>();
   ClassDB::register_class<FearTheCrow::SingleHitscanFeature>();
 }
 

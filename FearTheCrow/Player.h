@@ -66,6 +66,7 @@ using namespace godot;
         bool _handle_noclip(double delta);
         void clip_velocity(Vector3 normal, float overbounce, float _delta);
         void CreateCamera();
+        void CreateHitscan();
         void SetMouseMode(Input::MouseMode _mode) const;
         void _mouse_look(const Ref<InputEventMouseMotion> &p_event);
         float get_move_speed();
@@ -216,6 +217,7 @@ using namespace godot;
         uint64_t _last_frame_was_on_floor;
 
         Camera3D* camera;
+        RayCast3D* hitscan;
         MeshInstance3D* body;
         RayCast3D* stepDownRay;
         RayCast3D* stepAheadRay;

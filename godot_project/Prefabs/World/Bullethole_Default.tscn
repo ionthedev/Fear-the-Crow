@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjqnxqtdtsvt"]
+
+[ext_resource type="Texture2D" uid="uid://1q470061kspq" path="res://Assets/Textures/Bullethole.png" id="1_sn054"]
+
+[node name="Node3D" type="Decal"]
+size = Vector3(0.125, 0.125, 0.125)
+texture_albedo = ExtResource("1_sn054")
+modulate = Color(0, 0, 0, 1)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 10.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="queue_free"]

@@ -144,6 +144,7 @@ namespace FearTheCrow {
         CharacterBody3D::_ready();
         CreateHead();
         CreateCamera();
+        CreateHitscan();
         CreateStepRays();
         CreateCollider();
 
@@ -157,7 +158,7 @@ namespace FearTheCrow {
         } else {
             UtilityFunctions::print("Camera created successfully.");
         }
-
+        camera->add_to_group("PlayerCamera");
         CameraSmooth->add_child(camera);
 
         if (camera->is_inside_tree()) {
@@ -165,6 +166,24 @@ namespace FearTheCrow {
         } else {
             UtilityFunctions::print("Camera not added to tree.");
         }
+    }
+
+    void Player::CreateHitscan()
+    {
+        hitscan = memnew(RayCast3D);
+        if (hitscan == nullptr) {
+            UtilityFunctions::print("Hitscan creation failed!");
+        } else {
+            UtilityFunctions::print("Hitscan created successfully.");
+        }
+        hitscan->add_to_group("Hitscan");
+
+        if (hitscan->is_inside_tree()) {
+            UtilityFunctions::print("Hitscan added to tree successfully.");
+        } else {
+            UtilityFunctions::print("Hitscan not added to tree.");
+        }
+        camera->add_child(hitscan);
     }
 
     void Player::SetMouseMode(const Input::MouseMode _mode) const {

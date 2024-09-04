@@ -1,10 +1,11 @@
-[gd_scene load_steps=16 format=4 uid="uid://bfok543wtqkkg"]
+[gd_scene load_steps=19 format=4 uid="uid://bfok543wtqkkg"]
 
 [ext_resource type="Material" uid="uid://iy3pyqt48fti" path="res://Retro.tres" id="1_e1fsg"]
 [ext_resource type="Material" uid="uid://c62lmftbb3vu1" path="res://3Point.tres" id="1_t4q5c"]
 [ext_resource type="Material" uid="uid://cujdmctqkhdd6" path="res://MetersGrid.tres" id="2_b7l2h"]
 [ext_resource type="Shader" path="res://MetersGrid.gdshader" id="2_frpld"]
 [ext_resource type="Material" uid="uid://bbnmf4rese4ee" path="res://ColorPallete.tres" id="2_s8538"]
+[ext_resource type="PackedScene" uid="uid://cjqnxqtdtsvt" path="res://Prefabs/World/Bullethole_Default.tscn" id="4_g1o63"]
 [ext_resource type="PackedScene" uid="uid://bn4q3y8d47yiu" path="res://Prefabs/World/Crate.tscn" id="6_5mdmp"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_44dkl"]
@@ -51,7 +52,15 @@ shader_parameter/in_dashed_scale_y = 0.3
 shader_parameter/in_dashed_count_x = 6.0
 shader_parameter/in_dashed_count_y = 6.0
 
-[sub_resource type="SingleHitscanFeature" id="SingleHitscanFeature_dyat5"]
+[sub_resource type="SingleHitscanFeature" id="SingleHitscanFeature_htonr"]
+Spray = 0.75
+bulletHole = ExtResource("4_g1o63")
+
+[sub_resource type="WeaponTrigger" id="WeaponTrigger_odnc1"]
+InputEventAction = "Fire1"
+
+[sub_resource type="Weapon" id="Weapon_3fqha"]
+features = Array[WeaponFeature]([SubResource("SingleHitscanFeature_htonr"), SubResource("WeaponTrigger_odnc1")])
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2gvhv"]
 size = Vector3(3.11523, 1.32715, 4.4939)
@@ -85,10 +94,10 @@ use_collision = true
 size = Vector3(4.5, 4.5, 62.93)
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="."]
-transform = Transform3D(-2.10102, 0.215762, 8.26106e-08, 3.65747, 0.123943, -2.86049e-08, -2.78188e-07, 1.42788e-08, -1, 7.05367, -0.0753648, -45.5744)
+transform = Transform3D(-2.10102, 0.215762, 8.26106e-08, 3.65747, 0.123943, -2.86049e-08, -2.78188e-07, 1.42788e-08, -1, 7.05367, -0.0753646, -52.531)
 material_override = SubResource("StandardMaterial3D_1sdov")
 use_collision = true
-size = Vector3(4.5, 4.5, 62.93)
+size = Vector3(4.5, 4.5, 76.6169)
 
 [node name="CSGBox3D4" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.4, 0)
@@ -128,8 +137,8 @@ crouch_jump_add = 0.7
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.809933, 2.40748, 2.94993)
 platform_on_leave = 2
 
-[node name="Weapon" type="Weapon" parent="Player"]
-feature = SubResource("SingleHitscanFeature_dyat5")
+[node name="WeaponSystem" type="WeaponSystem" parent="Player"]
+weapons = Array[Weapon]([SubResource("Weapon_3fqha")])
 
 [node name="Area3D" type="Area3D" parent="."]
 
