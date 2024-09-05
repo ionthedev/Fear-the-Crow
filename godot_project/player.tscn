@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://cneco1q2ups5j"]
+
+[ext_resource type="Script" path="res://Player.cs" id="1_bqchd"]
+[ext_resource type="PackedScene" uid="uid://cdlebv74ulaxk" path="res://Prefabs/Weapons/Shotgun/SM_Shotgun.tscn" id="2_e3cyv"]
+[ext_resource type="PackedScene" uid="uid://dpogyhm4i5pkd" path="res://Prefabs/Weapons/Pistol/SM_Pistol.tscn" id="3_ja4f7"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_xohxy"]
+height = 1.778
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("_camera", "_stepDownRay", "_stepAheadRay", "_col", "_headOriginalPosition", "_head", "_cameraSmooth")]
+script = ExtResource("1_bqchd")
+_camera = NodePath("HeadOrigin/Head/Camera Smooth/Camera3D")
+_stepDownRay = NodePath("StepDownRay")
+_stepAheadRay = NodePath("StepAheadRay")
+_col = NodePath("CollisionShape3D")
+_headOriginalPosition = NodePath("HeadOrigin")
+_head = NodePath("HeadOrigin/Head")
+_cameraSmooth = NodePath("HeadOrigin/Head/Camera Smooth")
+
+[node name="StepDownRay" type="RayCast3D" parent="."]
+
+[node name="StepAheadRay" type="RayCast3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.55, -0.55)
+target_position = Vector3(0, -0.55, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.9, 0)
+shape = SubResource("CapsuleShape3D_xohxy")
+
+[node name="HeadOrigin" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.626, 0)
+
+[node name="Head" type="Node3D" parent="HeadOrigin"]
+
+[node name="Camera Smooth" type="Node3D" parent="HeadOrigin/Head"]
+
+[node name="Camera3D" type="Camera3D" parent="HeadOrigin/Head/Camera Smooth"]
+current = true
+
+[node name="WeaponMarker" type="Marker3D" parent="HeadOrigin/Head/Camera Smooth/Camera3D"]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0.145, -0.15, -0.1)
+
+[node name="SM_Shotgun" parent="HeadOrigin/Head/Camera Smooth/Camera3D/WeaponMarker" instance=ExtResource("2_e3cyv")]
+
+[node name="SM_Pistol" parent="HeadOrigin/Head/Camera Smooth/Camera3D/WeaponMarker" instance=ExtResource("3_ja4f7")]
+visible = false

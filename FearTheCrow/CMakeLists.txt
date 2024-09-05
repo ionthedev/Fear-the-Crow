@@ -10,19 +10,29 @@ file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS
 add_library("${PROJECT_NAME}" SHARED "${SOURCES}"
         Player.cpp
         Player.h
-        WeaponSystem/WeaponFeature.cpp
-        WeaponSystem/WeaponFeature.h
-        WeaponSystem/Features/SingleHitscanFeature.cpp
-        WeaponSystem/Features/SingleHitscanFeature.h
-        WeaponSystem/WeaponSystem.cpp
-        WeaponSystem/WeaponSystem.h
-        WeaponSystem/Weapon.cpp
-        WeaponSystem/Weapon.h
-        WeaponSystem/Bullethole.cpp
-        WeaponSystem/Bullethole.h
-        WeaponSystem/WeaponTrigger.cpp
-        WeaponSystem/Triggers/SemiAutoTrigger.cpp
-        WeaponSystem/Triggers/SemiAutoTrigger.h
+        40Legions/WeaponSystem/WeaponFeature.cpp
+        40Legions/WeaponSystem/WeaponFeature.h
+        40Legions/WeaponSystem/Features/SingleHitscanFeature.cpp
+        40Legions/WeaponSystem/Features/SingleHitscanFeature.h
+        40Legions/WeaponSystem/WeaponSystem.cpp
+        40Legions/WeaponSystem/WeaponSystem.h
+        40Legions/WeaponSystem/Weapon.cpp
+        40Legions/WeaponSystem/Weapon.h
+        40Legions/WeaponSystem/Bullethole.cpp
+        40Legions/WeaponSystem/Bullethole.h
+        40Legions/WeaponSystem/WeaponTrigger.cpp
+        40Legions/WeaponSystem/Triggers/SemiAutoTrigger.cpp
+        40Legions/WeaponSystem/Triggers/SemiAutoTrigger.h
+        Weapons/Revolver.cpp
+        Weapons/Revolver.h
+        Weapons/Shotgun.cpp
+        Weapons/Shotgun.h
+        Weapons/SMG.cpp
+        Weapons/SMG.h
+        Weapons/AssaultRifle.cpp
+        Weapons/AssaultRifle.h
+        Weapons/WeaponBase.cpp
+        Weapons/WeaponBase.h
 )
 
 # Add godot cpp to the library

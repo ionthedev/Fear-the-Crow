@@ -11,6 +11,7 @@
 #include <godot_cpp/classes/resource.hpp>
 
 #include "WeaponFeature.h"
+#include "WeaponTrigger.h"
 
 
 namespace FearTheCrow {
@@ -28,8 +29,11 @@ public:
     void PostDeactivate();
 
     void ExecuteFeature(String p_event);
-    void SetFeatures(TypedArray<WeaponFeature> _features);
+    void GetPrimaryFeatures(TypedArray<WeaponFeature> _features);
     TypedArray<WeaponFeature> GetFeatures();
+
+    void SetPrimaryTriggers(TypedArray<WeaponTrigger> _triggers);
+    TypedArray<WeaponTrigger> GetPrimaryTriggers();
 
     bool HasFeature(WeaponFeature feature);
 
@@ -39,7 +43,10 @@ public:
     const Weapon* GetWeapon() const{return this;}
 
 private:
-    TypedArray<WeaponFeature> features;
+    TypedArray<WeaponFeature> primaryFeatures;
+    TypedArray<WeaponFeature> secondaryFeatures;
+    WeaponTrigger* primaryTrigger;
+    WeaponTrigger* secondaryTrigger;
     Mesh* weaponMesh = nullptr;
     Vector3 weaponAnchor = Vector3(0.145f, -0.15f, -0.1f);
     WeaponSystem* weapon_system;
